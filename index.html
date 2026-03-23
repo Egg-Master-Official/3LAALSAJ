@@ -1,261 +1,150 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <meta name="theme-color" content="#0B0B0B">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Danat Alkhair | Fine Dining Experience in Kuwait</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3LA ALSAJ | Fine Charcoal Grill</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     
     <style>
         :root {
-            --bg-deep: #0B0B0B;
-            --bg-card: #111111;
-            --gold-primary: #C9A96E;
-            --gold-light: #E0C992;
-            --gold-dark: #A08550;
-            --beige: #F5F0E8;
-            --text-primary: #FFFFFF;
-            --text-secondary: #9A9A9A;
-            --text-muted: #5A5A5A;
-            --border-subtle: rgba(201, 169, 110, 0.15);
+            --bg-primary: #050505;
+            --bg-secondary: #0b0b0b;
+            --bg-card: #0f0f0f;
+            --text-primary: #f5f5f5;
+            --text-muted: #666666;
+            --accent-gold: #c9a227;
+            --accent-light: #e0c060;
+            --border: #1a1a1a;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
         }
 
-        @media (pointer: coarse) {
-            * { cursor: auto; }
+        html.lenis, html.lenis body {
+            height: auto;
         }
 
-        html {
-            scroll-behavior: smooth;
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+            overscroll-behavior: none;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-deep);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
-            line-height: 1.7;
-            font-weight: 300;
-            letter-spacing: 0.02em;
         }
 
-        .font-display {
-            font-family: 'Cinzel', Georgia, serif;
-            letter-spacing: 0.15em;
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+        }
+
+        .preloader-progress {
+            width: 200px;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preloader-bar {
+            position: absolute;
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gold);
+        }
+
+        .preloader-text {
+            margin-top: 2.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.75rem;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0;
         }
 
         /* Custom Cursor */
         .cursor {
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--gold-primary);
-            border-radius: 50%;
             position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease, background 0.15s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--gold-primary);
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--accent-gold);
             border-radius: 50%;
-            position: fixed;
             pointer-events: none;
-            z-index: 10001;
+            z-index: 9999;
+            mix-blend-mode: difference;
             transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease, border-color 0.4s ease;
         }
 
         .cursor.hover {
-            transform: translate(-50%, -50%) scale(2);
-            background: rgba(201, 169, 110, 0.1);
+            width: 60px;
+            height: 60px;
+            border-color: var(--accent-light);
         }
 
-        @media (pointer: coarse) {
-            .cursor, .cursor-dot { display: none; }
-        }
-
-        /* Smooth Scroll Container */
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-
-        /* Gold Text Gradient */
-        .gold-text {
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Luxury Glass Card */
-        .glass-luxury {
-            background: linear-gradient(165deg, rgba(20, 20, 20, 0.9) 0%, rgba(11, 11, 11, 0.95) 100%);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-subtle);
-        }
-
-        /* Premium Button */
-        .btn-luxury {
-            position: relative;
-            background: transparent;
-            color: var(--gold-primary);
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            padding: 18px 40px;
-            border: 1px solid var(--gold-primary);
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .btn-luxury::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gold-primary);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: -1;
-        }
-
-        .btn-luxury:hover {
-            color: var(--bg-deep);
-            box-shadow: 0 0 40px rgba(201, 169, 110, 0.3);
-        }
-
-        .btn-luxury:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        .btn-filled {
-            background: var(--gold-primary);
-            color: var(--bg-deep);
-        }
-
-        .btn-filled::before {
-            background: var(--gold-light);
-        }
-
-        .btn-filled:hover {
-            color: var(--bg-deep);
-        }
-
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero-video-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                linear-gradient(180deg, 
-                    rgba(11, 11, 11, 0.4) 0%, 
-                    rgba(11, 11, 11, 0.6) 50%,
-                    rgba(11, 11, 11, 1) 100%
-                ),
-                url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center center / cover;
-            transform: scale(1.1);
-            will-change: transform;
-        }
-
-        .hero-vignette {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(11, 11, 11, 0.8) 100%);
-        }
-
-        .hero-grain {
-            position: absolute;
-            inset: 0;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 50%;
             pointer-events: none;
-        }
-
-        /* Reveal Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-scale {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal-scale.active {
-            opacity: 1;
-            transform: scale(1);
+            z-index: 9999;
+            transform: translate(-50%, -50%);
         }
 
         /* Navigation */
-        .nav-luxury {
+        .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            padding: 30px 60px;
-            transition: all 0.5s ease;
-        }
-
-        .nav-luxury.scrolled {
-            background: rgba(11, 11, 11, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 20px 60px;
-            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
         }
 
         .nav-link {
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            letter-spacing: 0.2em;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-decoration: none;
             position: relative;
-            padding: 8px 0;
-            transition: color 0.4s ease;
+            padding-bottom: 4px;
         }
 
         .nav-link::after {
@@ -265,1216 +154,848 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--gold-primary);
-            transition: width 0.4s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--gold-primary);
+            background: var(--accent-gold);
+            transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .nav-link:hover::after {
             width: 100%;
         }
 
-        /* Menu Card Premium */
-        .menu-card-luxury {
+        /* Hero */
+        .hero {
+            height: 100vh;
             position: relative;
-            background: var(--bg-card);
-            border: 1px solid transparent;
             overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .menu-card-luxury::before {
-            content: '';
+        .hero-media {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, var(--gold-primary), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            z-index: 0;
         }
 
-        .menu-card-luxury:hover {
-            border-color: var(--border-subtle);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .menu-card-luxury:hover::before {
-            opacity: 0.05;
-        }
-
-        .menu-image-container {
-            position: relative;
-            height: 280px;
-            overflow: hidden;
-        }
-
-        .menu-image-container img {
+        .hero-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.35) grayscale(25%) contrast(1.1);
         }
 
-        .menu-card-luxury:hover .menu-image-container img {
-            transform: scale(1.1);
-        }
-
-        .chef-badge {
+        .hero-overlay {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
-            color: var(--bg-deep);
-            font-family: 'Cinzel', serif;
-            font-size: 9px;
-            letter-spacing: 0.15em;
+            inset: 0;
+            background: linear-gradient(180deg, 
+                rgba(5,5,5,0.3) 0%, 
+                rgba(5,5,5,0.1) 40%, 
+                rgba(5,5,5,0.8) 100%);
+            z-index: 1;
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 250px rgba(0,0,0,0.9);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-label {
+            font-size: 0.6rem;
+            letter-spacing: 8px;
             text-transform: uppercase;
-            padding: 8px 16px;
-            animation: glowPulse 2s infinite;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            opacity: 0;
         }
 
-        @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(201, 169, 110, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(201, 169, 110, 0.6); }
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            line-height: 0.85;
+            opacity: 0;
         }
 
-        /* Category Tabs */
-        .category-tab-luxury {
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            letter-spacing: 0.2em;
+        .hero-divider {
+            width: 80px;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 3rem auto;
+            transform: scaleX(0);
+            opacity: 0;
+        }
+
+        .hero-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--text-muted);
-            background: transparent;
-            border: none;
-            padding: 16px 32px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.4s ease;
+            opacity: 0;
         }
 
-        .category-tab-luxury::after {
-            content: '';
+        .scroll-cue {
             position: absolute;
-            bottom: 0;
+            bottom: 4rem;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 1px;
-            background: var(--gold-primary);
-            transition: width 0.4s ease;
-        }
-
-        .category-tab-luxury:hover,
-        .category-tab-luxury.active {
-            color: var(--gold-primary);
-        }
-
-        .category-tab-luxury.active::after {
-            width: 40px;
-        }
-
-        /* Gallery Masonry */
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.15);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(11, 11, 11, 0.9) 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            z-index: 10;
             display: flex;
-            align-items: flex-end;
-            padding: 30px;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
         }
 
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
         }
 
-        /* Testimonial Card */
-        .testimonial-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 40px;
+        /* Sections */
+        .section {
+            padding: 200px 0;
             position: relative;
         }
 
-        .testimonial-card::before {
-            content: '"';
-            font-family: 'Cinzel', serif;
-            font-size: 120px;
-            color: var(--gold-primary);
-            opacity: 0.1;
-            position: absolute;
-            top: -20px;
-            left: 20px;
+        .section-header {
+            text-align: center;
+            margin-bottom: 150px;
+        }
+
+        .section-label {
+            font-size: 0.6rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
             line-height: 1;
         }
 
-        /* Form Inputs */
-        .form-input-luxury {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            padding: 16px 24px;
+        .section-divider {
+            width: 50px;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 2rem auto;
+            transform: scaleX(0);
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+
+        .about-img {
             width: 100%;
-            transition: all 0.4s ease;
-            outline: none;
+            height: 550px;
+            object-fit: cover;
+            filter: grayscale(30%);
         }
 
-        .form-input-luxury:focus {
-            border-color: var(--gold-primary);
-            background: rgba(201, 169, 110, 0.03);
+        .about-frame {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: -30px;
+            bottom: -30px;
+            border: 1px solid var(--border);
+            pointer-events: none;
         }
 
-        .form-input-luxury::placeholder {
+        .about-text {
+            font-size: 0.95rem;
+            line-height: 2.2;
             color: var(--text-muted);
+            margin-bottom: 2rem;
         }
 
-        /* Lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(11, 11, 11, 0.98);
-            backdrop-filter: blur(30px);
-            z-index: 9000;
+        /* Menu Filter */
+        .filter-wrap {
             display: flex;
-            align-items: center;
             justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 100px;
         }
 
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            inset: 0;
-            background: rgba(11, 11, 11, 0.98);
-            backdrop-filter: blur(30px);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .mobile-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-link {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            letter-spacing: 0.2em;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: color 0.4s ease;
-        }
-
-        .mobile-menu-link:hover {
-            color: var(--gold-primary);
-        }
-
-        /* Sticky Bottom CTA - Mobile */
-        .sticky-cta-mobile {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px 20px;
-            background: linear-gradient(180deg, transparent, rgba(11, 11, 11, 0.98) 30%);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .sticky-cta-mobile {
-                display: block;
-            }
-            .nav-luxury {
-                padding: 20px;
-            }
-        }
-
-        /* Divider */
-        .gold-divider {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-        }
-
-        .gold-divider-long {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
-        }
-
-        /* Language Toggle */
-        .lang-toggle {
-            display: flex;
-            gap: 8px;
-            padding: 4px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .lang-btn {
-            font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            padding: 8px 16px;
+        .filter-btn {
+            padding: 0.8rem 1.8rem;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             background: transparent;
-            border: none;
+            border: 1px solid var(--border);
             color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .lang-btn.active {
-            background: var(--gold-primary);
-            color: var(--bg-deep);
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-primary);
         }
 
-        /* Hamburger */
-        .hamburger {
-            width: 32px;
-            height: 24px;
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .menu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-img-wrap {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .menu-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%);
+            transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+        }
+
+        .menu-card:hover .menu-img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        .menu-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, transparent 60%);
+        }
+
+        .menu-body {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .menu-cat {
+            font-size: 0.55rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .menu-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .menu-desc {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-footer {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
+        }
+
+        .menu-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+        }
+
+        .btn-order {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             background: transparent;
-            border: none;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
             cursor: pointer;
-            padding: 0;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.6s ease, border-color 0.6s ease;
         }
 
-        .hamburger span {
-            display: block;
-            width: 100%;
-            height: 1px;
-            background: var(--text-primary);
-            transition: all 0.3s ease;
+        .btn-order::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gold);
+            transform: translateX(-100%);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
         }
 
-        /* Floating Buttons */
-        .floating-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+        .btn-order:hover {
+            color: var(--bg-primary);
+            border-color: var(--accent-gold);
+        }
+
+        .btn-order:hover::before {
+            transform: translateX(0);
+        }
+
+        /* Parallax Section */
+        .parallax-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 900;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (max-width: 768px) {
-            .floating-buttons {
-                display: none;
-            }
+        .parallax-bg {
+            position: absolute;
+            inset: -150px;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.25) grayscale(30%);
         }
 
-        .floating-btn {
-            width: 56px;
-            height: 56px;
+        .parallax-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* Location */
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .location-item {
+            margin-bottom: 3rem;
+        }
+
+        .location-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .location-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .map-wrap {
+            width: 100%;
+            height: 450px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .map-wrap iframe {
+            width: 100%;
+            height: 100%;
+            filter: grayscale(90%) brightness(0.5);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        /* WhatsApp */
+        .wa-btn {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.25);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.6s ease;
         }
 
-        .floating-btn:hover {
-            transform: scale(1.1);
+        .wa-btn:hover {
+            transform: translateY(-5px) !important;
         }
 
-        .whatsapp-float {
-            background: #25D366;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav { padding: 1.5rem 2rem; }
+            .section { padding: 120px 0; }
+            .about-grid, .location-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-frame { display: none; }
         }
 
-        .call-float {
-            background: var(--gold-primary);
-        }
-
-        /* Scroll Progress */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-light));
-            z-index: 10000;
-            transform-origin: left;
-            transform: scaleX(0);
-        }
-
-        /* Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-            .reveal, .reveal-scale {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @media (max-width: 768px) {
+            .cursor, .cursor-dot { display: none !important; }
+            body { cursor: auto; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .section { padding: 80px 0; }
+            .section-header { margin-bottom: 80px; }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-progress">
+            <div class="preloader-bar" id="preloaderBar"></div>
+        </div>
+        <p class="preloader-text" id="preloaderText">3LA ALSAJ</p>
+    </div>
+
+    <!-- Cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-
     <!-- Navigation -->
-    <nav class="nav-luxury" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#hero" class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));">
-                    <span class="font-display text-lg text-black font-semibold">D</span>
-                </div>
-                <div class="hidden sm:block">
-                    <span class="font-display text-sm tracking-widest text-white">DANAT ALKHAIR</span>
-                    <span class="block text-xs text-gray-600 tracking-wider">FINE DINING</span>
-                </div>
-            </a>
-
-            <div class="hidden lg:flex items-center gap-12">
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#menu" class="nav-link">Menu</a>
-                <a href="#reservation" class="nav-link">Reservation</a>
-                <a href="#gallery" class="nav-link">Gallery</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-
-            <div class="hidden lg:flex items-center gap-6">
-                <div class="lang-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="ar">AR</button>
-                </div>
-                <a href="#reservation" class="btn-luxury btn-filled">Reserve</a>
-            </div>
-
-            <button class="hamburger lg:hidden" id="menuToggle" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <nav class="nav">
+        <a href="#" class="flex items-center gap-3">
+            <!-- Logo SVG -->
+            <svg width="42" height="42" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="46" stroke="#c9a227" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="40" stroke="#c9a227" stroke-width="0.5" stroke-dasharray="4 6"/>
+                <path d="M30 72 L50 24 L70 72" stroke="#c9a227" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M35 55 L65 55" stroke="#c9a227" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="50" cy="37" r="5" fill="#c9a227"/>
+                <path d="M38 65 Q50 78 62 65" stroke="#c9a227" stroke-width="1.5" fill="none"/>
+            </svg>
+            <span class="font-serif text-lg tracking-widest hidden sm:block" style="color: var(--accent-gold);">3LA ALSAJ</span>
+        </a>
+        <div class="hidden md:flex items-center gap-12">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#menu" class="nav-link">Menu</a>
+            <a href="#location" class="nav-link">Location</a>
         </div>
+        <button onclick="openWhatsApp()" class="btn-order hidden sm:block">Reserve</button>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="absolute top-8 right-8 w-12 h-12 flex items-center justify-center" id="menuClose" aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-        <a href="#experience" class="mobile-menu-link">Experience</a>
-        <a href="#menu" class="mobile-menu-link">Menu</a>
-        <a href="#reservation" class="mobile-menu-link">Reservation</a>
-        <a href="#gallery" class="mobile-menu-link">Gallery</a>
-        <a href="#contact" class="mobile-menu-link">Contact</a>
-        <div class="lang-toggle mt-8">
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="ar">AR</button>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-video-bg" id="heroBg"></div>
+    <section class="hero">
+        <div class="hero-media" id="heroMedia">
+            <video class="hero-video" autoplay muted loop playsinline id="heroVideo">
+                <source src="https://videos.pexels.com/video-files/3752842/3752842-uhd_2560_1440_30fps.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
         <div class="hero-vignette"></div>
-        <div class="hero-grain"></div>
-
-        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
-            <div style="animation: fadeInUp 1.2s 0.3s both;">
-                <span class="inline-block font-display text-xs tracking-widest text-gold-primary mb-8" style="color: var(--gold-primary);">KUWAIT'S PREMIER FINE DINING DESTINATION</span>
-            </div>
-
-            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal mb-6 leading-tight" style="animation: fadeInUp 1.2s 0.5s both;">
-                An Experience<br>
-                <span class="gold-text">Beyond Dining</span>
-            </h1>
-
-            <p class="text-lg md:text-xl text-gray-400 mb-12 font-light" style="animation: fadeInUp 1.2s 0.7s both;">
-                Where Taste Meets Elegance
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center" style="animation: fadeInUp 1.2s 0.9s both;">
-                <a href="#reservation" class="btn-luxury btn-filled">Reserve a Table</a>
-                <a href="#menu" class="btn-luxury">View Menu</a>
-            </div>
+        
+        <div class="hero-content">
+            <p class="hero-label" id="heroLabel">Premium Charcoal Grill</p>
+            <h1 class="hero-title" id="heroTitle">3LA ALSAJ</h1>
+            <div class="hero-divider" id="heroDivider"></div>
+            <p class="hero-subtitle" id="heroSubtitle">Fine Dining & Middle Eastern Cuisine</p>
         </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2" style="animation: fadeIn 1.5s 1.5s both;">
-            <div class="flex flex-col items-center gap-3">
-                <span class="font-display text-xs tracking-widest text-gray-600">SCROLL</span>
-                <div class="w-px h-16 bg-gradient-to-b from-gold-primary to-transparent" style="background: linear-gradient(180deg, var(--gold-primary), transparent);"></div>
-            </div>
+        
+        <div class="scroll-cue" id="scrollCue">
+            <span class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- Signature Experience Section -->
-    <section class="py-32 px-6" id="experience">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                <div class="reveal">
-                    <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">OUR STORY</span>
-                    <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal mb-8 leading-tight">
-                        Crafted with<br>
-                        <span class="gold-text">Passion & Precision</span>
-                    </h2>
-                    <div class="gold-divider mb-8"></div>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        At Danat Alkhair, every dish tells a story of heritage and innovation. Our master chefs blend traditional Arabic and Indian culinary arts with contemporary techniques, creating an unforgettable gastronomic journey.
-                    </p>
-                    <p class="text-gray-500 mb-10 leading-relaxed">
-                        We source only the finest ingredients from trusted suppliers worldwide, ensuring each plate reflects our commitment to excellence. From the aromatic spices to the premium cuts of meat, quality is never compromised.
-                    </p>
-                    <a href="#menu" class="btn-luxury">Discover Our Menu</a>
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="about-grid">
+                <div class="about-img-wrap" id="aboutImg">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80" alt="Grill" class="about-img">
+                    <div class="about-frame"></div>
                 </div>
-
-                <div class="reveal-scale">
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-gradient-to-br from-gold-primary/10 to-transparent rounded-lg"></div>
-                        <img 
-                            src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80" 
-                            alt="Chef preparing dish" 
-                            class="relative rounded-lg w-full h-96 lg:h-[500px] object-cover"
-                            loading="lazy"
-                        >
-                        <div class="absolute bottom-6 left-6 right-6 glass-luxury p-6 rounded-lg">
-                            <span class="font-display text-xs tracking-widest block mb-2" style="color: var(--gold-primary);">EXECUTIVE CHEF</span>
-                            <span class="font-display text-lg">Ahmed Al-Rashid</span>
-                            <span class="block text-sm text-gray-500 mt-1">20 Years of Culinary Excellence</span>
-                        </div>
-                    </div>
+                <div class="about-content" id="aboutContent">
+                    <span class="section-label">Our Story</span>
+                    <h2 class="section-title mb-8">A Legacy of<br/><span style="color: var(--accent-gold);">Authentic Flavors</span></h2>
+                    <p class="about-text">
+                        At 3LA ALSAJ, we invite you to experience the rich culinary heritage of the Middle East. Our kitchen blends time-honored recipes with the finest ingredients.
+                    </p>
+                    <p class="about-text">
+                        From our signature charcoal grills to handcrafted shawarma, every dish reflects our passion for excellence and tradition.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Features -->
-    <section class="py-20 px-6" style="background: linear-gradient(180deg, transparent, rgba(201, 169, 110, 0.02), transparent);">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="reveal text-center p-8">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="border: 1px solid var(--border-subtle);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-display text-lg mb-3">Premium Ingredients</h3>
-                    <p class="text-sm text-gray-500">Sourced from the finest producers worldwide</p>
-                </div>
-
-                <div class="reveal text-center p-8" style="transition-delay: 0.1s;">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="border: 1px solid var(--border-subtle);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-display text-lg mb-3">Open 24 Hours</h3>
-                    <p class="text-sm text-gray-500">Exceptional dining at any hour</p>
-                </div>
-
-                <div class="reveal text-center p-8" style="transition-delay: 0.2s;">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="border: 1px solid var(--border-subtle);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-display text-lg mb-3">Crafted with Love</h3>
-                    <p class="text-sm text-gray-500">Every dish made with passion</p>
-                </div>
-            </div>
+    <!-- Parallax Break -->
+    <section class="parallax-section">
+        <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1558030006-450675393462?w=1920&q=80');" id="parallaxBg"></div>
+        <div class="parallax-content">
+            <span class="section-label">Experience</span>
+            <h2 class="section-title">Charcoal<br/>Perfection</h2>
         </div>
     </section>
 
     <!-- Menu Section -->
-    <section class="py-32 px-6" id="menu">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">CULINARY ARTISTRY</span>
-                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal mb-6">Our Menu</h2>
-                <div class="gold-divider mx-auto"></div>
+    <section class="section" id="menu">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="section-header">
+                <span class="section-label">Culinary Excellence</span>
+                <h2 class="section-title">The Menu</h2>
+                <div class="section-divider" id="menuDivider"></div>
             </div>
 
-            <!-- Category Tabs -->
-            <div class="flex flex-wrap justify-center gap-4 mb-16 reveal">
-                <button class="category-tab-luxury active" data-category="starters">Starters</button>
-                <button class="category-tab-luxury" data-category="mains">Main Course</button>
-                <button class="category-tab-luxury" data-category="grills">Grills</button>
-                <button class="category-tab-luxury" data-category="desserts">Desserts</button>
+            <div class="filter-wrap" id="filterWrap">
+                <button class="filter-btn active" data-cat="all">All</button>
+                <button class="filter-btn" data-cat="grill">Grill Sandwich</button>
+                <button class="filter-btn" data-cat="bbq">BBQ</button>
+                <button class="filter-btn" data-cat="steak">Steak</button>
+                <button class="filter-btn" data-cat="shawarma">Shawarma</button>
+                <button class="filter-btn" data-cat="rice">Rice</button>
+                <button class="filter-btn" data-cat="ramadan">Ramadan</button>
             </div>
 
-            <!-- Menu Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="menuGrid"></div>
+            <div class="menu-grid" id="menuGrid"></div>
         </div>
     </section>
 
-    <!-- Reservation Section -->
-    <section class="py-32 px-6 relative overflow-hidden" id="reservation">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-0 right-0 w-96 h-96 rounded-full" style="background: radial-gradient(circle, var(--gold-primary), transparent);"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full" style="background: radial-gradient(circle, var(--gold-primary), transparent);"></div>
-        </div>
-
-        <div class="max-w-4xl mx-auto relative z-10">
-            <div class="text-center mb-16 reveal">
-                <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">BOOK YOUR EXPERIENCE</span>
-                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal mb-6">Make a Reservation</h2>
-                <div class="gold-divider mx-auto mb-8"></div>
-                <p class="text-gray-400 max-w-xl mx-auto">Reserve your table and prepare for an unforgettable dining experience</p>
+    <!-- Location Section -->
+    <section class="section" id="location" style="background: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="section-header">
+                <span class="section-label">Find Us</span>
+                <h2 class="section-title">Location</h2>
+                <div class="section-divider" id="locDivider"></div>
             </div>
 
-            <div class="glass-luxury p-8 md:p-12 rounded-xl reveal-scale">
-                <form id="reservationForm" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Full Name</label>
-                            <input type="text" class="form-input-luxury" placeholder="Your name" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Phone Number</label>
-                            <input type="tel" class="form-input-luxury" placeholder="+965 XXXX XXXX" required>
-                        </div>
+            <div class="location-grid">
+                <div class="location-info" id="locationInfo">
+                    <div class="location-item">
+                        <h3 class="location-label">Address</h3>
+                        <p class="location-text">Kuwait City, Kuwait<br/>Al Hamra Tower District</p>
                     </div>
-
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Date</label>
-                            <input type="date" class="form-input-luxury" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Time</label>
-                            <select class="form-input-luxury" required>
-                                <option value="">Select time</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="13:00">1:00 PM</option>
-                                <option value="14:00">2:00 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="21:00">9:00 PM</option>
-                                <option value="22:00">10:00 PM</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Guests</label>
-                            <select class="form-input-luxury" required>
-                                <option value="">Select</option>
-                                <option value="1">1 Guest</option>
-                                <option value="2">2 Guests</option>
-                                <option value="3">3 Guests</option>
-                                <option value="4">4 Guests</option>
-                                <option value="5">5 Guests</option>
-                                <option value="6">6+ Guests</option>
-                            </select>
-                        </div>
+                    <div class="location-item">
+                        <h3 class="location-label">Hours</h3>
+                        <p class="location-text">Daily: 11:00 AM - 12:00 AM<br/>Friday: 2:00 PM - 12:00 AM</p>
                     </div>
-
-                    <div>
-                        <label class="block text-xs tracking-wider text-gray-500 mb-3 uppercase">Special Requests</label>
-                        <textarea class="form-input-luxury" rows="3" placeholder="Any dietary requirements or special occasions..."></textarea>
+                    <div class="location-item">
+                        <h3 class="location-label">Contact</h3>
+                        <p class="location-text">+965 1234 5678</p>
                     </div>
-
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button type="submit" class="btn-luxury btn-filled flex-1">Confirm Reservation</button>
-                        <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20make%20a%20reservation" target="_blank" class="btn-luxury flex-1 text-center">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            Instant WhatsApp Booking
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="py-32 px-6" id="gallery">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">VISUAL JOURNEY</span>
-                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal mb-6">Gallery</h2>
-                <div class="gold-divider mx-auto"></div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="galleryGrid"></div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="py-32 px-6" style="background: linear-gradient(180deg, transparent, rgba(201, 169, 110, 0.02), transparent);">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">GUEST EXPERIENCES</span>
-                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-normal mb-6">What Our Guests Say</h2>
-                <div class="gold-divider mx-auto"></div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8" id="testimonialsGrid"></div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="py-32 px-6" id="contact">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div class="reveal">
-                    <span class="font-display text-xs tracking-widest mb-6 block" style="color: var(--gold-primary);">VISIT US</span>
-                    <h2 class="font-display text-3xl md:text-4xl font-normal mb-8">Location & Contact</h2>
-                    <div class="gold-divider mb-10"></div>
-
-                    <div class="space-y-8">
-                        <div class="flex gap-6">
-                            <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="border: 1px solid var(--border-subtle);">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-display text-lg mb-2">Address</h3>
-                                <p class="text-gray-400">Hamad Al-Mubarak Street<br>Salmiya, Kuwait</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-6">
-                            <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="border: 1px solid var(--border-subtle);">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M12 6v6l4 2"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-display text-lg mb-2">Opening Hours</h3>
-                                <p class="text-gray-400">Open 24 Hours<br>7 Days a Week</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-6">
-                            <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="border: 1px solid var(--border-subtle);">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-display text-lg mb-2">Contact</h3>
-                                <p class="text-gray-400">+965 1234 5678<br>reservations@danatalkhair.com</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4 mt-10">
-                        <a href="tel:+96512345678" class="btn-luxury">Call Us</a>
-                        <a href="https://maps.google.com/?q=Salmiya,Kuwait" target="_blank" class="btn-luxury">Get Directions</a>
-                    </div>
+                    <button onclick="openWhatsApp()" class="btn-order mt-8">Book a Table</button>
                 </div>
-
-                <div class="reveal-scale">
-                    <div class="relative rounded-xl overflow-hidden h-96 lg:h-full min-h-96">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27763.744845966883!2d48.0451!3d29.3375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf9e96c5b6a5d5%3A0x4b4b4b4b4b4b4b4b!2sSalmiya%2C%20Kuwait!5e0!3m2!1sen!2s!4v1234567890"
-                            width="100%" 
-                            height="100%" 
-                            style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
-                            loading="lazy"
-                        ></iframe>
-                    </div>
+                <div class="map-wrap" id="mapWrap">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55894.635!2d47.9!3d29.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sKuwait+City!5e0!3m2!1sen!2s!1v1" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 px-6" style="border-top: 1px solid var(--border-subtle);">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));">
-                            <span class="font-display text-lg text-black font-semibold">D</span>
-                        </div>
-                        <div>
-                            <span class="font-display text-sm tracking-widest text-white">DANAT ALKHAIR</span>
-                            <span class="block text-xs text-gray-600 tracking-wider">FINE DINING</span>
-                        </div>
-                    </div>
-                    <p class="text-gray-500 text-sm max-w-sm">
-                        An extraordinary culinary journey where traditional Arabic and Indian flavors meet contemporary elegance.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="font-display text-xs tracking-widest mb-6" style="color: var(--gold-primary);">QUICK LINKS</h4>
-                    <div class="space-y-3">
-                        <a href="#menu" class="block text-sm text-gray-500 hover:text-white transition-colors">Menu</a>
-                        <a href="#reservation" class="block text-sm text-gray-500 hover:text-white transition-colors">Reservations</a>
-                        <a href="#gallery" class="block text-sm text-gray-500 hover:text-white transition-colors">Gallery</a>
-                        <a href="#contact" class="block text-sm text-gray-500 hover:text-white transition-colors">Contact</a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="font-display text-xs tracking-widest mb-6" style="color: var(--gold-primary);">OPENING HOURS</h4>
-                    <div class="space-y-3 text-sm text-gray-500">
-                        <p>Monday - Thursday: 24 Hours</p>
-                        <p>Friday - Sunday: 24 Hours</p>
-                        <p class="text-white mt-4">Always Open</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gold-divider-long mb-8"></div>
-
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-600">2024 Danat Alkhair. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center border transition-all hover:border-gold-primary hover:text-gold-primary" style="border-color: var(--border-subtle); color: var(--gold-primary);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center border transition-all hover:border-gold-primary hover:text-gold-primary" style="border-color: var(--border-subtle); color: var(--gold-primary);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center border transition-all hover:border-gold-primary hover:text-gold-primary" style="border-color: var(--border-subtle); color: var(--gold-primary);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
+    <footer class="footer">
+        <svg width="50" height="50" viewBox="0 0 100 100" fill="none" class="mx-auto mb-6">
+            <circle cx="50" cy="50" r="46" stroke="#c9a227" stroke-width="1.5"/>
+            <path d="M30 70 L50 25 L70 70" stroke="#c9a227" stroke-width="2"/>
+            <path d="M35 55 L65 55" stroke="#c9a227" stroke-width="2"/>
+        </svg>
+        <p class="font-serif text-xl mb-4" style="color: var(--accent-gold);">3LA ALSAJ</p>
+        <p class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">All prices in Kuwaiti Dinar (KD)</p>
     </footer>
 
-    <!-- Floating Buttons -->
-    <div class="floating-buttons">
-        <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20make%20a%20reservation" target="_blank" class="floating-btn whatsapp-float" aria-label="WhatsApp">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-        <a href="tel:+96512345678" class="floating-btn call-float" aria-label="Call">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B0B0B" stroke-width="2">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-        </a>
-    </div>
-
-    <!-- Mobile Sticky CTA -->
-    <div class="sticky-cta-mobile">
-        <a href="#reservation" class="btn-luxury btn-filled w-full text-center">Reserve Now</a>
-    </div>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <button class="absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center border border-white/20" id="lightboxClose" aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-        <img src="" alt="Gallery" id="lightboxImg">
-    </div>
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/96512345678?text=Hello! I want to place an order" target="_blank" class="wa-btn" id="waBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
 
     <script>
-        // Data
-        const menuData = {
-            starters: [
-                { name: 'Hummus Royale', desc: 'Creamy chickpea puree with truffle oil and warm pita', price: '2.500 KD', image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600&q=80', chef: true },
-                { name: 'Lamb Sambousek', desc: 'Crispy pastry filled with spiced lamb and pine nuts', price: '2.000 KD', image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80', chef: false },
-                { name: 'Moutabel Deluxe', desc: 'Smoky eggplant dip with pomegranate and olive oil', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=600&q=80', chef: false },
-                { name: 'Kibbeh Platter', desc: 'Traditional bulgur croquettes with spiced beef', price: '2.250 KD', image: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=600&q=80', chef: true }
-            ],
-            mains: [
-                { name: 'Lamb Mansaf', desc: 'Tender lamb with fermented yogurt on spiced rice', price: '5.500 KD', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80', chef: true },
-                { name: 'Butter Chicken', desc: 'Creamy tomato curry with tandoori chicken', price: '3.750 KD', image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80', chef: false },
-                { name: 'Shrimp Biryani', desc: 'Aromatic basmati rice with Gulf shrimp', price: '4.500 KD', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80', chef: false },
-                { name: 'Dal Makhani', desc: 'Slow-cooked black lentils in cream', price: '2.250 KD', image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=80', chef: false }
-            ],
-            grills: [
-                { name: 'Mixed Grill Royal', desc: 'Premium selection of lamb, chicken, and kebabs', price: '6.500 KD', image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80', chef: true },
-                { name: 'Shish Taouk', desc: 'Marinated chicken skewers with garlic sauce', price: '3.250 KD', image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&q=80', chef: false },
-                { name: 'Lamb Kofta', desc: 'Seasoned ground lamb skewers', price: '3.500 KD', image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80', chef: false },
-                { name: 'Grilled Sea Bass', desc: 'Whole fish with herbs and lemon', price: '5.750 KD', image: 'https://images.unsplash.com/photo-1630443031138-dca0d5bd4fe3?w=600&q=80', chef: true }
-            ],
-            desserts: [
-                { name: 'Kunafa Royal', desc: 'Crispy pastry with sweet cheese and rose syrup', price: '2.500 KD', image: 'https://images.unsplash.com/photo-1579888944880-d98341245702?w=600&q=80', chef: true },
-                { name: 'Umm Ali', desc: 'Traditional bread pudding with nuts', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80', chef: false },
-                { name: 'Tiramisu', desc: 'Classic Italian coffee-flavored dessert', price: '2.000 KD', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80', chef: false }
-            ]
+        // ================== DATA ==================
+        const menuData = [
+            { name: "Kaak Musahab", desc: "Garlic, special sauce, pickled cucumber, potatoes, mix cheese", price: 1.500, cat: "grill", img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600&q=80" },
+            { name: "Chicken Musahab Lebanese Bread", desc: "Garlic, special sauce, pickled cucumber, potatoes", price: 0.850, cat: "grill", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
+            { name: "Shish Tawooq Lebanese Bread", desc: "Garlic, special sauce, pickled cucumber, potatoes", price: 0.850, cat: "grill", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" },
+            { name: "Kabab Sandwich Lebanese Bread", desc: "Tahni, parsley, onion and tomato", price: null, cat: "grill", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80" },
+            { name: "Half Charcoal Grilled Chicken", desc: "Charcoal chicken, potatoes, sauce, bread", price: 1.500, cat: "bbq", img: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&q=80" },
+            { name: "Whole Chicken", desc: "Marinated with lemon and olive oil, grilled over charcoal", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600&q=80" },
+            { name: "Boneless Chicken Charcoal", desc: "Marinated with yogurt, lemon, herbs", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=600&q=80" },
+            { name: "Tawooq Shish Meal", desc: "3 Skewers of marinated chicken breast fillet", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
+            { name: "Kabab Halabi Meal", desc: "3 Skewers of fresh Australian lamb", price: 2.650, cat: "bbq", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80" },
+            { name: "Mix Grill Meal", desc: "Tawooq, kebab, tikka, fries and coleslaw", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" },
+            { name: "Fajita Chicken Sandwich", desc: "Cajun spices, mozzarella, BBQ sauce", price: 1.250, cat: "steak", img: "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600&q=80" },
+            { name: "Philadelphia Steak", desc: "Grilled steak with onions, peppers, cheddar", price: 1.250, cat: "steak", img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" },
+            { name: "Steak Special Chicken", desc: "Marinated chicken, mozzarella, cheddar", price: null, cat: "steak", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
+            { name: "Steak Special Meat", desc: "Marinated beef, mozzarella, cheddar", price: null, cat: "steak", img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&q=80" },
+            { name: "Shawarma Beef Kaak", desc: "Beef shawarma, special tahini and onions", price: 1.100, cat: "shawarma", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
+            { name: "Chicken Shawarma", desc: "Marinated chicken breast and thigh slices", price: null, cat: "shawarma", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
+            { name: "Meat Shawarma", desc: "Australian lamb with Middle Eastern spices", price: null, cat: "shawarma", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80" },
+            { name: "Chicken Shawarma Kaak", desc: "Garlic, pickled cucumber, potatoes, cheese", price: 1.050, cat: "shawarma", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" },
+            { name: "Half Chicken and Rice", desc: "Charcoal grilled chicken, spiced rice, dakous", price: 2.750, cat: "rice", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
+            { name: "Boneless Chicken and Rice", desc: "Marinated boneless chicken, spiced rice", price: 2.750, cat: "rice", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80" },
+            { name: "Shish Tawook and Rice", desc: "2 skewers chicken breast, steamed rice", price: 2.500, cat: "rice", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
+            { name: "Kabab and Rice", desc: "2 skewers Australian lamb, steamed rice", price: 2.500, cat: "rice", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80" },
+            { name: "Family Mixed Grill", desc: "Large platter of mixed grills for family", price: 19.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" },
+            { name: "Family Rice with Chicken", desc: "Two marinated chickens with spiced rice", price: 6.950, cat: "ramadan", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
+            { name: "Mix Combo Deal", desc: "Mix shawarma saj, fries, Kinza drink", price: 2.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
+            { name: "Chicken/Boneless Rice Deal", desc: "Special Ramadan offer", price: 2.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
+        ];
+
+        const categoryMap = {
+            grill: 'Grill Sandwich',
+            bbq: 'BBQ',
+            steak: 'Steak Sandwich',
+            shawarma: 'Shawarma',
+            rice: 'Grilled Rice',
+            ramadan: 'Ramadan Offers'
         };
 
-        const galleryImages = [
-            { src: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80', height: 'tall' },
-            { src: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80', height: 'normal' },
-            { src: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80', height: 'tall' },
-            { src: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600&q=80', height: 'normal' },
-            { src: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80', height: 'normal' },
-            { src: 'https://images.unsplash.com/photo-1579888944880-d98341245702?w=600&q=80', height: 'tall' },
-            { src: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600&q=80', height: 'normal' },
-            { src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80', height: 'normal' }
-        ];
+        // ================== VARS ==================
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
+        let lenis = null;
 
-        const testimonials = [
-            { name: 'Sarah Al-Ahmad', text: 'An extraordinary dining experience. The attention to detail in every dish reflects true culinary artistry.', rating: 5 },
-            { name: 'Michael Thompson', text: 'The finest Arabic cuisine I have experienced outside the Middle East. Impeccable service and ambiance.', rating: 5 },
-            { name: 'Fatima Hassan', text: 'Every visit feels special. The lamb mansaf is absolutely divine. A true gem in Kuwait.', rating: 5 }
-        ];
+        const preloader = document.getElementById('preloader');
+        const preloaderBar = document.getElementById('preloaderBar');
+        const preloaderText = document.getElementById('preloaderText');
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        const menuGrid = document.getElementById('menuGrid');
+        const waBtn = document.getElementById('waBtn');
 
-        // DOM Elements
-        let cursor, cursorDot, scrollProgress, navbar, heroBg;
-        let menuToggle, menuClose, mobileMenu;
-        let lightbox, lightboxImg, lightboxClose;
-        let menuGrid, galleryGrid, testimonialsGrid;
-        let categoryTabs;
-        let reservationForm;
+        // ================== FUNCTIONS ==================
+        
+        function openWhatsApp() {
+            window.open('https://wa.me/96512345678?text=Hello! I want to place an order from 3LA ALSAJ', '_blank');
+        }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get DOM elements
-            cursor = document.getElementById('cursor');
-            cursorDot = document.getElementById('cursorDot');
-            scrollProgress = document.getElementById('scrollProgress');
-            navbar = document.getElementById('navbar');
-            heroBg = document.getElementById('heroBg');
-            menuToggle = document.getElementById('menuToggle');
-            menuClose = document.getElementById('menuClose');
-            mobileMenu = document.getElementById('mobileMenu');
-            lightbox = document.getElementById('lightbox');
-            lightboxImg = document.getElementById('lightboxImg');
-            lightboxClose = document.getElementById('lightboxClose');
-            menuGrid = document.getElementById('menuGrid');
-            galleryGrid = document.getElementById('galleryGrid');
-            testimonialsGrid = document.getElementById('testimonialsGrid');
-            categoryTabs = document.getElementById('categoryTabs');
-            reservationForm = document.getElementById('reservationForm');
+        function orderItem(name) {
+            const msg = encodeURIComponent(`Hello! I would like to order: ${name}`);
+            window.open(`https://wa.me/96512345678?text=${msg}`, '_blank');
+        }
 
-            // Render content
-            renderMenu('starters');
-            renderGallery();
-            renderTestimonials();
+        function renderMenu(cat = 'all') {
+            const filtered = cat === 'all' ? menuData : menuData.filter(i => i.cat === cat);
+            menuGrid.innerHTML = '';
 
-            // Setup interactions
-            setupCursor();
-            setupScroll();
-            setupMobileMenu();
-            setupLightbox();
-            setupMenuTabs();
-            setupForm();
-            setupRevealAnimations();
+            filtered.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(60px) scale(0.98)';
+                
+                const price = item.price ? `KD ${item.price.toFixed(3)}` : 'Price on Selection';
+
+                card.innerHTML = `
+                    <div class="menu-img-wrap">
+                        <img src="${item.img}" alt="${item.name}" class="menu-img" loading="lazy">
+                        <div class="menu-overlay"></div>
+                    </div>
+                    <div class="menu-body">
+                        <span class="menu-cat">${categoryMap[item.cat] || item.cat}</span>
+                        <h3 class="menu-title">${item.name}</h3>
+                        <p class="menu-desc">${item.desc}</p>
+                        <div class="menu-footer">
+                            <span class="menu-price">${price}</span>
+                            <button class="btn-order" onclick="orderItem('${item.name}')">Order</button>
+                        </div>
+                    </div>
+                `;
+                menuGrid.appendChild(card);
+            });
+
+            // Animate cards in
+            requestAnimationFrame(() => {
+                gsap.to('.menu-card', {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1.2,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    overwrite: true
+                });
+            });
+        }
+
+        // ================== CURSOR ==================
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            dotX += (mouseX - dotX) * 0.3;
+            dotY += (mouseY - dotY) * 0.3;
+
+            if (cursor) cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+            if (cursorDot) cursorDot.style.transform = `translate(${dotX}px, ${dotY}px)`;
+
+            requestAnimationFrame(animateCursor);
+        }
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // Custom Cursor
-        function setupCursor() {
-            if (!cursor || !cursorDot) return;
-            
-            document.addEventListener('mousemove', function(e) {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                cursorDot.style.left = e.clientX + 'px';
-                cursorDot.style.top = e.clientY + 'px';
+        document.querySelectorAll('a, button, .menu-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hover'));
+        });
+
+        // ================== LENIS ==================
+        function initLenis() {
+            lenis = new Lenis({
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                smoothTouch: false,
+                touchMultiplier: 2,
             });
 
-            document.querySelectorAll('a, button, .gallery-item, .menu-card-luxury').forEach(function(el) {
-                el.addEventListener('mouseenter', function() {
-                    cursor.classList.add('hover');
-                });
-                el.addEventListener('mouseleave', function() {
-                    cursor.classList.remove('hover');
-                });
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        // ================== ANIMATIONS ==================
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Video Zoom
+            gsap.to('#heroMedia', {
+                scale: 1.08,
+                duration: 25,
+                ease: 'none',
+                repeat: -1,
+                yoyo: true
             });
+
+            // Hero Timeline
+            const heroTL = gsap.timeline({ delay: 0.8 });
+            heroTL
+                .to('#heroLabel', { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' })
+                .to('#heroTitle', { opacity: 1, duration: 1.6, ease: 'power3.out' }, '-=1')
+                .to('#heroDivider', { scaleX: 1, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=1')
+                .to('#heroSubtitle', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.8')
+                .to('#scrollCue', { opacity: 1, duration: 1, ease: 'power2.out' }, '-=0.5');
+
+            // Section Dividers
+            gsap.to('#menuDivider', {
+                scaleX: 1, duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: '#menu', start: 'top 70%' }
+            });
+
+            gsap.to('#locDivider', {
+                scaleX: 1, duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: '#location', start: 'top 70%' }
+            });
+
+            // About Section
+            gsap.fromTo('#aboutImg', 
+                { opacity: 0, x: -100 },
+                { opacity: 1, x: 0, duration: 1.6, ease: 'power3.out',
+                  scrollTrigger: { trigger: '#about', start: 'top 60%' }
+                }
+            );
+            gsap.fromTo('#aboutContent', 
+                { opacity: 0, x: 100 },
+                { opacity: 1, x: 0, duration: 1.6, ease: 'power3.out',
+                  scrollTrigger: { trigger: '#about', start: 'top 60%' }
+                }
+            );
+
+            // Parallax
+            gsap.to('#parallaxBg', {
+                yPercent: 25, ease: 'none',
+                scrollTrigger: { trigger: '.parallax-section', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+            });
+
+            // Location
+            gsap.fromTo('#locationInfo', 
+                { opacity: 0, x: -80 },
+                { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out',
+                  scrollTrigger: { trigger: '#location', start: 'top 60%' }
+                }
+            );
+            gsap.fromTo('#mapWrap', 
+                { opacity: 0, x: 80 },
+                { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out',
+                  scrollTrigger: { trigger: '#location', start: 'top 60%' }
+                }
+            );
+
+            // WhatsApp Button
+            gsap.to('#waBtn', { opacity: 1, y: 0, duration: 1, delay: 2.5, ease: 'power3.out' });
         }
 
-        // Scroll Effects
-        function setupScroll() {
-            window.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = Math.min(scrollY / docHeight, 1);
-
-                if (scrollProgress) {
-                    scrollProgress.style.transform = 'scaleX(' + progress + ')';
-                }
-
-                if (navbar) {
-                    if (scrollY > 100) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                }
-
-                if (heroBg && window.innerWidth > 768) {
-                    heroBg.style.transform = 'scale(' + (1.1 + scrollY * 0.0002) + ') translateY(' + (scrollY * 0.3) + 'px)';
-                }
-            }, { passive: true });
-        }
-
-        // Mobile Menu
-        function setupMobileMenu() {
-            if (menuToggle && mobileMenu) {
-                menuToggle.addEventListener('click', function() {
-                    mobileMenu.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
+        // ================== FILTER ==================
+        document.getElementById('filterWrap').addEventListener('click', e => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderMenu(e.target.dataset.cat);
             }
+        });
 
-            if (menuClose && mobileMenu) {
-                menuClose.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
+        // ================== INIT ==================
+        function init() {
+            // Cursor loop
+            animateCursor();
 
-            if (mobileMenu) {
-                mobileMenu.querySelectorAll('a').forEach(function(link) {
-                    link.addEventListener('click', function() {
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
-        }
+            // Smooth scroll
+            initLenis();
 
-        // Lightbox
-        function setupLightbox() {
-            if (lightboxClose && lightbox) {
-                lightboxClose.addEventListener('click', function() {
-                    lightbox.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-
-                lightbox.addEventListener('click', function(e) {
-                    if (e.target === lightbox) {
-                        lightbox.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-                    lightbox.classList.remove('active');
-                    document.body.style.overflow = '';
+            // Preloader Animation
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    preloader.style.pointerEvents = 'none';
+                    initAnimations();
+                    renderMenu();
                 }
             });
+
+            tl.to(preloaderBar, { width: '100%', duration: 2.5, ease: 'power2.inOut' })
+              .to(preloaderText, { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.8')
+              .to(preloader, { opacity: 0, duration: 0.8, ease: 'power2.inOut' }, '+=0.3');
         }
 
-        // Menu Tabs
-        function setupMenuTabs() {
-            if (!categoryTabs) return;
-
-            categoryTabs.addEventListener('click', function(e) {
-                const tab = e.target.closest('.category-tab-luxury');
-                if (!tab) return;
-
-                document.querySelectorAll('.category-tab-luxury').forEach(function(t) {
-                    t.classList.remove('active');
-                });
-                tab.classList.add('active');
-
-                const category = tab.getAttribute('data-category');
-                if (category) {
-                    renderMenu(category);
-                }
-            });
-        }
-
-        // Form
-        function setupForm() {
-            if (!reservationForm) return;
-
-            reservationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for your reservation! We will contact you shortly to confirm.');
-                reservationForm.reset();
-            });
-        }
-
-        // Reveal Animations
-        function setupRevealAnimations() {
-            const reveals = document.querySelectorAll('.reveal, .reveal-scale');
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -80px 0px'
-            });
-
-            reveals.forEach(function(el) {
-                observer.observe(el);
-            });
-        }
-
-        // Render Menu
-        function renderMenu(category) {
-            if (!menuGrid) return;
-
-            const items = menuData[category] || [];
-            menuGrid.innerHTML = items.map(function(item, index) {
-                return '<div class="menu-card-luxury" style="animation: fadeInUp 0.8s ' + (index * 0.1) + 's both;">' +
-                    '<div class="menu-image-container">' +
-                        '<img src="' + item.image + '" alt="' + item.name + '" loading="lazy">' +
-                        (item.chef ? '<span class="chef-badge">Chef Recommended</span>' : '') +
-                    '</div>' +
-                    '<div class="p-6">' +
-                        '<div class="flex justify-between items-start mb-3">' +
-                            '<h3 class="font-display text-lg">' + item.name + '</h3>' +
-                            '<span class="gold-text font-semibold">' + item.price + '</span>' +
-                        '</div>' +
-                        '<p class="text-sm text-gray-500">' + item.desc + '</p>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-
-            // Re-setup cursor hover for new elements
-            if (cursor) {
-                document.querySelectorAll('.menu-card-luxury').forEach(function(el) {
-                    el.addEventListener('mouseenter', function() {
-                        cursor.classList.add('hover');
-                    });
-                    el.addEventListener('mouseleave', function() {
-                        cursor.classList.remove('hover');
-                    });
-                });
-            }
-        }
-
-        // Render Gallery
-        function renderGallery() {
-            if (!galleryGrid) return;
-
-            galleryGrid.innerHTML = galleryImages.map(function(img, index) {
-                const heightClass = img.height === 'tall' ? 'row-span-2' : '';
-                return '<div class="gallery-item ' + heightClass + '" data-src="' + img.src + '" style="animation: fadeIn 0.8s ' + (index * 0.1) + 's both;">' +
-                    '<img src="' + img.src + '" alt="Gallery" loading="lazy">' +
-                    '<div class="gallery-overlay">' +
-                        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1">' +
-                            '<circle cx="11" cy="11" r="8"/>' +
-                            '<path d="m21 21-4.35-4.35"/>' +
-                            '<path d="M11 8v6M8 11h6"/>' +
-                        '</svg>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-
-            // Add click handlers
-            document.querySelectorAll('.gallery-item').forEach(function(item) {
-                item.addEventListener('click', function() {
-                    const src = this.getAttribute('data-src');
-                    if (lightbox && lightboxImg && src) {
-                        lightboxImg.src = src;
-                        lightbox.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
-                });
-
-                // Cursor hover
-                if (cursor) {
-                    item.addEventListener('mouseenter', function() {
-                        cursor.classList.add('hover');
-                    });
-                    item.addEventListener('mouseleave', function() {
-                        cursor.classList.remove('hover');
-                    });
-                }
-            });
-        }
-
-        // Render Testimonials
-        function renderTestimonials() {
-            if (!testimonialsGrid) return;
-
-            testimonialsGrid.innerHTML = testimonials.map(function(t, index) {
-                return '<div class="testimonial-card reveal" style="transition-delay: ' + (index * 0.1) + 's;">' +
-                    '<div class="flex gap-1 mb-6">' +
-                        Array(t.rating).fill('<svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A96E"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('') +
-                    '</div>' +
-                    '<p class="text-gray-400 mb-6 leading-relaxed">' + t.text + '</p>' +
-                    '<span class="font-display text-sm">' + t.name + '</span>' +
-                '</div>';
-            }).join('');
-        }
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
