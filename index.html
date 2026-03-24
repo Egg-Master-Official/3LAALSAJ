@@ -3,29 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3LA ALSAJ | Fine Charcoal Grill</title>
+    <title>Tasty World Cafeteria | Premium Dining Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #050505;
-            --bg-secondary: #0b0b0b;
-            --bg-card: #0f0f0f;
-            --text-primary: #f5f5f5;
-            --text-muted: #666666;
-            --accent-gold: #c9a227;
-            --accent-light: #e0c060;
-            --border: #1a1a1a;
+            --bg: #0B0B0B;
+            --bg-secondary: #111111;
+            --fg: #FAF8F5;
+            --muted: #8A8A8A;
+            --accent: #C9A96E;
+            --accent-light: #E5D4B3;
+            --card: rgba(20, 20, 20, 0.8);
+            --border: rgba(201, 169, 110, 0.2);
+            --glass: rgba(201, 169, 110, 0.05);
         }
 
         * {
@@ -34,117 +27,365 @@
             box-sizing: border-box;
         }
 
-        html.lenis, html.lenis body {
-            height: auto;
-        }
-
-        .lenis.lenis-smooth {
-            scroll-behavior: auto !important;
-            overscroll-behavior: none;
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--fg);
             overflow-x: hidden;
+            cursor: none;
         }
 
-        .font-serif {
-            font-family: 'Cormorant Garamond', serif;
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            .custom-cursor { display: none !important; }
         }
 
-        /* Preloader */
-        .preloader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: all;
-        }
-
-        .preloader-progress {
-            width: 200px;
-            height: 1px;
-            background: var(--border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preloader-bar {
-            position: absolute;
-            height: 100%;
-            width: 0%;
-            background: var(--accent-gold);
-        }
-
-        .preloader-text {
-            margin-top: 2.5rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.75rem;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            color: var(--accent-gold);
-            opacity: 0;
+        .font-display {
+            font-family: 'Cinzel', serif;
         }
 
         /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 1px solid var(--accent-gold);
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--accent);
             border-radius: 50%;
+            position: fixed;
             pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
+            z-index: 10000;
+            transition: transform 0.15s ease, background 0.15s ease;
             transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease, border-color 0.4s ease;
         }
 
-        .cursor.hover {
-            width: 60px;
-            height: 60px;
-            border-color: var(--accent-light);
+        .custom-cursor.hover {
+            transform: translate(-50%, -50%) scale(2);
+            background: rgba(201, 169, 110, 0.1);
         }
 
         .cursor-dot {
-            position: fixed;
             width: 4px;
             height: 4px;
-            background: var(--accent-gold);
+            background: var(--accent);
             border-radius: 50%;
+            position: fixed;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             transform: translate(-50%, -50%);
         }
 
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 2rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            mix-blend-mode: difference;
+        /* Smooth Scroll */
+        .smooth-scroll {
+            scroll-behavior: smooth;
         }
 
-        .nav-link {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4); }
+            50% { box-shadow: 0 0 30px 10px rgba(201, 169, 110, 0.1); }
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            @keyframes fadeInUp {
+                from, to { opacity: 1; transform: none; }
+            }
+        }
+
+        /* Hero Background Animation */
+        .hero-bg {
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(20, 20, 20, 1) 0%, var(--bg) 100%);
+        }
+
+        /* Noise Overlay */
+        .noise-overlay::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            animation: grain 8s steps(10) infinite;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(201, 169, 110, 0.1);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
+            color: var(--bg);
+            font-weight: 600;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--text-primary);
-            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border: none;
             position: relative;
-            padding-bottom: 4px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(201, 169, 110, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1rem 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* Menu Tabs */
+        .menu-tab {
+            padding: 1rem 2rem;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .menu-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .menu-tab:hover, .menu-tab.active {
+            color: var(--accent);
+        }
+
+        .menu-tab.active::after {
+            width: 100%;
+        }
+
+        /* Menu Item */
+        .menu-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: var(--glass);
+            padding-left: 2rem;
+        }
+
+        .menu-item:hover .item-name {
+            color: var(--accent);
+        }
+
+        .chef-badge {
+            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
+            color: var(--bg);
+            font-size: 0.65rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: pulse-gold 2s infinite;
+        }
+
+        /* Gallery */
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Testimonial Card */
+        .testimonial-card {
+            background: linear-gradient(135deg, var(--card) 0%, rgba(30, 30, 30, 0.8) 100%);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-family: 'Cinzel', serif;
+            font-size: 6rem;
+            color: var(--accent);
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 1rem;
+            line-height: 1;
+        }
+
+        /* Floating Button */
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Logo */
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--bg);
+            border-radius: 50%;
+        }
+
+        .logo-icon svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            color: var(--fg);
+            transition: color 0.3s ease;
         }
 
         .nav-link::after {
@@ -154,848 +395,1091 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--accent-gold);
-            transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
         }
 
         .nav-link:hover::after {
             width: 100%;
         }
 
-        /* Hero */
-        .hero {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-media {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-
-        .hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.35) grayscale(25%) contrast(1.1);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, 
-                rgba(5,5,5,0.3) 0%, 
-                rgba(5,5,5,0.1) 40%, 
-                rgba(5,5,5,0.8) 100%);
-            z-index: 1;
-        }
-
-        .hero-vignette {
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 250px rgba(0,0,0,0.9);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 0 2rem;
-        }
-
-        .hero-label {
-            font-size: 0.6rem;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: var(--accent-gold);
-            margin-bottom: 2rem;
-            opacity: 0;
-        }
-
-        .hero-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(4rem, 15vw, 12rem);
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            line-height: 0.85;
-            opacity: 0;
-        }
-
-        .hero-divider {
-            width: 80px;
-            height: 1px;
-            background: var(--accent-gold);
-            margin: 3rem auto;
-            transform: scaleX(0);
-            opacity: 0;
-        }
-
-        .hero-subtitle {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            opacity: 0;
-        }
-
-        .scroll-cue {
-            position: absolute;
-            bottom: 4rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            opacity: 0;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, var(--accent-gold), transparent);
-        }
-
-        /* Sections */
-        .section {
-            padding: 200px 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 150px;
-        }
-
-        .section-label {
-            font-size: 0.6rem;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--accent-gold);
-            display: block;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 300;
-            line-height: 1;
-        }
-
-        .section-divider {
-            width: 50px;
-            height: 1px;
-            background: var(--accent-gold);
-            margin: 2rem auto;
-            transform: scaleX(0);
-        }
-
-        /* About */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8rem;
-            align-items: center;
-        }
-
-        .about-img-wrap {
-            position: relative;
-        }
-
-        .about-img {
-            width: 100%;
-            height: 550px;
-            object-fit: cover;
-            filter: grayscale(30%);
-        }
-
-        .about-frame {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            right: -30px;
-            bottom: -30px;
+        /* Form Inputs */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
-            pointer-events: none;
-        }
-
-        .about-text {
-            font-size: 0.95rem;
-            line-height: 2.2;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        /* Menu Filter */
-        .filter-wrap {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 100px;
-        }
-
-        .filter-btn {
-            padding: 0.8rem 1.8rem;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: var(--bg-primary);
-        }
-
-        /* Menu Grid */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .menu-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-img-wrap {
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .menu-img {
+            padding: 1rem 1.5rem;
+            color: var(--fg);
+            transition: all 0.3s ease;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(40%);
-            transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
         }
 
-        .menu-card:hover .menu-img {
-            transform: scale(1.08);
-            filter: grayscale(0%);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
         }
 
-        .menu-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, transparent 60%);
+        .form-input::placeholder {
+            color: var(--muted);
         }
 
-        .menu-body {
-            padding: 2rem;
-            position: relative;
+        /* Stars */
+        .star {
+            color: var(--accent);
         }
 
-        .menu-cat {
-            font-size: 0.55rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--accent-gold);
-            margin-bottom: 0.75rem;
-        }
-
-        .menu-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .menu-desc {
-            font-size: 0.8rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .menu-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .menu-price {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--accent-gold);
-        }
-
-        .btn-order {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.6s ease, border-color 0.6s ease;
-        }
-
-        .btn-order::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--accent-gold);
-            transform: translateX(-100%);
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: -1;
-        }
-
-        .btn-order:hover {
-            color: var(--bg-primary);
-            border-color: var(--accent-gold);
-        }
-
-        .btn-order:hover::before {
-            transform: translateX(0);
-        }
-
-        /* Parallax Section */
-        .parallax-section {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .parallax-bg {
-            position: absolute;
-            inset: -150px;
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.25) grayscale(30%);
-        }
-
-        .parallax-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        /* Location */
-        .location-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8rem;
-            align-items: center;
-        }
-
-        .location-item {
-            margin-bottom: 3rem;
-        }
-
-        .location-label {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .location-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        .map-wrap {
-            width: 100%;
-            height: 450px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .map-wrap iframe {
-            width: 100%;
-            height: 100%;
-            filter: grayscale(90%) brightness(0.5);
-        }
-
-        /* Footer */
-        .footer {
-            padding: 120px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        /* WhatsApp */
-        .wa-btn {
+        /* Lightbox */
+        .lightbox {
             position: fixed;
-            bottom: 3rem;
-            right: 3rem;
-            width: 60px;
-            height: 60px;
-            background: #25D366;
-            border-radius: 50%;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 100;
-            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.25);
             opacity: 0;
-            transform: translateY(20px);
-            transition: transform 0.6s ease;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .wa-btn:hover {
-            transform: translateY(-5px) !important;
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .nav { padding: 1.5rem 2rem; }
-            .section { padding: 120px 0; }
-            .about-grid, .location-grid { grid-template-columns: 1fr; gap: 4rem; }
-            .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .about-frame { display: none; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            .cursor, .cursor-dot { display: none !important; }
-            body { cursor: auto; }
-            .menu-grid { grid-template-columns: 1fr; }
-            .section { padding: 80px 0; }
-            .section-header { margin-bottom: 80px; }
+        .lightbox.active img {
+            transform: scale(1);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 1.5rem auto;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 9998;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
         }
     </style>
 </head>
-<body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-progress">
-            <div class="preloader-bar" id="preloaderBar"></div>
-        </div>
-        <p class="preloader-text" id="preloaderText">3LA ALSAJ</p>
-    </div>
+<body class="smooth-scroll">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
 
-    <!-- Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/97450000000" target="_blank" class="floating-btn hidden md:flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all hover:scale-105">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="text-sm font-medium">Book Now</span>
+    </a>
 
     <!-- Navigation -->
-    <nav class="nav">
-        <a href="#" class="flex items-center gap-3">
-            <!-- Logo SVG -->
-            <svg width="42" height="42" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="50" r="46" stroke="#c9a227" stroke-width="1.5"/>
-                <circle cx="50" cy="50" r="40" stroke="#c9a227" stroke-width="0.5" stroke-dasharray="4 6"/>
-                <path d="M30 72 L50 24 L70 72" stroke="#c9a227" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M35 55 L65 55" stroke="#c9a227" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="50" cy="37" r="5" fill="#c9a227"/>
-                <path d="M38 65 Q50 78 62 65" stroke="#c9a227" stroke-width="1.5" fill="none"/>
-            </svg>
-            <span class="font-serif text-lg tracking-widest hidden sm:block" style="color: var(--accent-gold);">3LA ALSAJ</span>
-        </a>
-        <div class="hidden md:flex items-center gap-12">
-            <a href="#about" class="nav-link">About</a>
-            <a href="#menu" class="nav-link">Menu</a>
-            <a href="#location" class="nav-link">Location</a>
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="font-display text-lg font-semibold tracking-wider text-[var(--fg)]">TASTY WORLD</h1>
+                        <p class="text-[0.65rem] tracking-[0.3em] text-[var(--muted)]">CAFETERIA</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm tracking-wider">Home</a>
+                    <a href="#about" class="nav-link text-sm tracking-wider">About</a>
+                    <a href="#menu" class="nav-link text-sm tracking-wider">Menu</a>
+                    <a href="#gallery" class="nav-link text-sm tracking-wider">Gallery</a>
+                    <a href="#contact" class="nav-link text-sm tracking-wider">Contact</a>
+                </div>
+
+                <!-- Reserve Button -->
+                <div class="hidden md:block">
+                    <a href="#reservation" class="btn-primary text-xs rounded-sm">Reserve Table</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" id="menuToggle">
+                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all origin-center"></span>
+                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all"></span>
+                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all origin-center"></span>
+                </button>
+            </div>
         </div>
-        <button onclick="openWhatsApp()" class="btn-order hidden sm:block">Reserve</button>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu md:hidden" id="mobileMenu">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <a href="#home" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Home</a>
+            <a href="#about" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">About</a>
+            <a href="#menu" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Menu</a>
+            <a href="#gallery" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Gallery</a>
+            <a href="#contact" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Contact</a>
+            <a href="#reservation" class="btn-primary text-sm rounded-sm mt-4">Reserve Table</a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-media" id="heroMedia">
-            <video class="hero-video" autoplay muted loop playsinline id="heroVideo">
-                <source src="https://videos.pexels.com/video-files/3752842/3752842-uhd_2560_1440_30fps.mp4" type="video/mp4">
-            </video>
+    <section id="home" class="relative min-h-screen flex items-center justify-center hero-bg noise-overlay overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--accent)] opacity-5 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[var(--accent)] opacity-5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
         </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-vignette"></div>
-        
-        <div class="hero-content">
-            <p class="hero-label" id="heroLabel">Premium Charcoal Grill</p>
-            <h1 class="hero-title" id="heroTitle">3LA ALSAJ</h1>
-            <div class="hero-divider" id="heroDivider"></div>
-            <p class="hero-subtitle" id="heroSubtitle">Fine Dining & Middle Eastern Cuisine</p>
+
+        <!-- Floating Particles -->
+        <div class="absolute inset-0 pointer-events-none" id="particles"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="animate-on-scroll stagger-1">
+                <p class="text-[var(--accent)] tracking-[0.4em] text-xs md:text-sm mb-6 uppercase">Premium Dining Experience</p>
+            </div>
+            
+            <h1 class="font-display text-4xl md:text-6xl lg:text-8xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-2">
+                An Experience<br>
+                <span class="text-[var(--accent)]">Beyond Dining</span>
+            </h1>
+            
+            <p class="text-[var(--muted)] text-lg md:text-xl tracking-wide mb-12 animate-on-scroll stagger-3">
+                Where Taste Meets Elegance
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll stagger-4">
+                <a href="#reservation" class="btn-primary rounded-sm">Reserve a Table</a>
+                <a href="#menu" class="btn-secondary rounded-sm">View Menu</a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <div class="w-6 h-10 border-2 border-[var(--accent)] rounded-full flex items-start justify-center p-2">
+                    <div class="w-1 h-2 bg-[var(--accent)] rounded-full animate-pulse"></div>
+                </div>
+            </div>
         </div>
-        
-        <div class="scroll-cue" id="scrollCue">
-            <span class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
+
+        <!-- Decorative Lines -->
+        <div class="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-20"></div>
+        <div class="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-20"></div>
     </section>
 
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="about-grid">
-                <div class="about-img-wrap" id="aboutImg">
-                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80" alt="Grill" class="about-img">
-                    <div class="about-frame"></div>
+    <!-- Signature Experience Section -->
+    <section id="about" class="py-24 md:py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Image Side -->
+                <div class="relative animate-on-scroll">
+                    <div class="aspect-[4/5] relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[#8B7355] opacity-20 rounded-sm"></div>
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=750&fit=crop" alt="Chef preparing dish" class="w-full h-full object-cover rounded-sm">
+                        <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-[var(--accent)] rounded-sm opacity-50"></div>
+                    </div>
+                    <!-- Stats -->
+                    <div class="absolute -bottom-8 -left-8 glass-card p-6 rounded-sm">
+                        <div class="text-4xl font-display text-[var(--accent)] font-semibold">15+</div>
+                        <p class="text-sm text-[var(--muted)] mt-1">Years of Excellence</p>
+                    </div>
                 </div>
-                <div class="about-content" id="aboutContent">
-                    <span class="section-label">Our Story</span>
-                    <h2 class="section-title mb-8">A Legacy of<br/><span style="color: var(--accent-gold);">Authentic Flavors</span></h2>
-                    <p class="about-text">
-                        At 3LA ALSAJ, we invite you to experience the rich culinary heritage of the Middle East. Our kitchen blends time-honored recipes with the finest ingredients.
+
+                <!-- Content Side -->
+                <div class="lg:pl-8">
+                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">OUR STORY</p>
+                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                        A Legacy of<br>Culinary Excellence
+                    </h2>
+                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
+                    
+                    <p class="text-[var(--muted)] leading-relaxed mb-6 animate-on-scroll stagger-3">
+                        At Tasty World Cafeteria, we believe dining is an art form. Our master chefs craft each dish with precision, using only the finest ingredients sourced from trusted suppliers across the globe.
                     </p>
-                    <p class="about-text">
-                        From our signature charcoal grills to handcrafted shawarma, every dish reflects our passion for excellence and tradition.
+                    <p class="text-[var(--muted)] leading-relaxed mb-8 animate-on-scroll stagger-4">
+                        From our signature healthy juices to our exquisite Spanish and Italian fusion dishes, every creation tells a story of passion, tradition, and innovation.
                     </p>
+
+                    <!-- Features -->
+                    <div class="grid grid-cols-2 gap-6 mb-8 animate-on-scroll stagger-5">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm">Premium Quality</h4>
+                                <p class="text-xs text-[var(--muted)] mt-1">Finest ingredients only</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm">Fast Service</h4>
+                                <p class="text-xs text-[var(--muted)] mt-1">Quick & elegant</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm">Made with Love</h4>
+                                <p class="text-xs text-[var(--muted)] mt-1">Passion in every dish</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm">Prime Location</h4>
+                                <p class="text-xs text-[var(--muted)] mt-1">Heart of the city</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#menu" class="btn-secondary rounded-sm inline-block animate-on-scroll stagger-5">Explore Menu</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Parallax Break -->
-    <section class="parallax-section">
-        <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1558030006-450675393462?w=1920&q=80');" id="parallaxBg"></div>
-        <div class="parallax-content">
-            <span class="section-label">Experience</span>
-            <h2 class="section-title">Charcoal<br/>Perfection</h2>
-        </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section class="section" id="menu">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="section-header">
-                <span class="section-label">Culinary Excellence</span>
-                <h2 class="section-title">The Menu</h2>
-                <div class="section-divider" id="menuDivider"></div>
+    <!-- Interactive Menu Section -->
+    <section id="menu" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
+        <div class="absolute inset-0 noise-overlay"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">CULINARY OFFERINGS</p>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                    Our Menu
+                </h2>
+                <div class="section-divider animate-on-scroll stagger-2"></div>
             </div>
 
-            <div class="filter-wrap" id="filterWrap">
-                <button class="filter-btn active" data-cat="all">All</button>
-                <button class="filter-btn" data-cat="grill">Grill Sandwich</button>
-                <button class="filter-btn" data-cat="bbq">BBQ</button>
-                <button class="filter-btn" data-cat="steak">Steak</button>
-                <button class="filter-btn" data-cat="shawarma">Shawarma</button>
-                <button class="filter-btn" data-cat="rice">Rice</button>
-                <button class="filter-btn" data-cat="ramadan">Ramadan</button>
+            <!-- Menu Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-0 mb-12 animate-on-scroll stagger-3 overflow-x-auto pb-4">
+                <button class="menu-tab active font-display text-sm tracking-wider whitespace-nowrap" data-category="juices">Fresh Juices</button>
+                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="wraps">Wraps & Sandwiches</button>
+                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="burgers">Burgers</button>
+                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="rice">Rice & Noodles</button>
             </div>
 
-            <div class="menu-grid" id="menuGrid"></div>
-        </div>
-    </section>
-
-    <!-- Location Section -->
-    <section class="section" id="location" style="background: var(--bg-secondary);">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="section-header">
-                <span class="section-label">Find Us</span>
-                <h2 class="section-title">Location</h2>
-                <div class="section-divider" id="locDivider"></div>
-            </div>
-
-            <div class="location-grid">
-                <div class="location-info" id="locationInfo">
-                    <div class="location-item">
-                        <h3 class="location-label">Address</h3>
-                        <p class="location-text">Kuwait City, Kuwait<br/>Al Hamra Tower District</p>
-                    </div>
-                    <div class="location-item">
-                        <h3 class="location-label">Hours</h3>
-                        <p class="location-text">Daily: 11:00 AM - 12:00 AM<br/>Friday: 2:00 PM - 12:00 AM</p>
-                    </div>
-                    <div class="location-item">
-                        <h3 class="location-label">Contact</h3>
-                        <p class="location-text">+965 1234 5678</p>
-                    </div>
-                    <button onclick="openWhatsApp()" class="btn-order mt-8">Book a Table</button>
+            <!-- Menu Content -->
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Menu Items Container -->
+                <div class="glass-card rounded-sm p-6 md:p-8 animate-on-scroll stagger-4" id="menuItems">
+                    <!-- Items will be populated by JavaScript -->
                 </div>
-                <div class="map-wrap" id="mapWrap">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55894.635!2d47.9!3d29.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sKuwait+City!5e0!3m2!1sen!2s!1v1" allowfullscreen="" loading="lazy"></iframe>
+
+                <!-- Featured Item Image -->
+                <div class="relative animate-on-scroll stagger-5 hidden lg:block">
+                    <div class="sticky top-32">
+                        <div class="aspect-square relative overflow-hidden rounded-sm">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=600&fit=crop" alt="Featured dish" class="w-full h-full object-cover" id="featuredImage">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent"></div>
+                        </div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <p class="text-[var(--accent)] text-xs tracking-[0.2em] mb-2">CHEF'S RECOMMENDATION</p>
+                            <h3 class="font-display text-2xl tracking-wider" id="featuredName">Healthy Juices</h3>
+                            <p class="text-[var(--muted)] text-sm mt-2" id="featuredDesc">Iron Booster, Liver Cure, Weight Loss, Power Booster</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-24 md:py-32 relative">
+        <div class="absolute inset-0 hero-bg"></div>
+        <div class="absolute inset-0 noise-overlay"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Content -->
+                <div>
+                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">RESERVATIONS</p>
+                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                        Book Your<br>Experience
+                    </h2>
+                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
+                    
+                    <p class="text-[var(--muted)] leading-relaxed mb-8 animate-on-scroll stagger-3">
+                        Secure your table at Tasty World Cafeteria. Whether it's an intimate dinner or a celebration, we ensure an unforgettable dining experience.
+                    </p>
+
+                    <!-- Opening Hours -->
+                    <div class="glass-card rounded-sm p-6 mb-6 animate-on-scroll stagger-4">
+                        <h4 class="font-display text-sm tracking-wider mb-4 text-[var(--accent)]">Opening Hours</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-[var(--muted)]">Monday - Thursday</span>
+                                <span>10:00 AM - 11:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-[var(--muted)]">Friday - Saturday</span>
+                                <span>10:00 AM - 12:00 AM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-[var(--muted)]">Sunday</span>
+                                <span>11:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/97450000000" class="flex items-center gap-3 text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors animate-on-scroll stagger-5">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        <span class="tracking-wider">Instant Booking via WhatsApp</span>
+                    </a>
+                </div>
+
+                <!-- Form -->
+                <div class="glass-card rounded-sm p-8 animate-on-scroll stagger-3">
+                    <form id="reservationForm" class="space-y-6">
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Your Name</label>
+                                <input type="text" class="form-input rounded-sm" placeholder="John Doe" required>
+                            </div>
+                            <div>
+                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Phone Number</label>
+                                <input type="tel" class="form-input rounded-sm" placeholder="+974 5000 0000" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Date</label>
+                                <input type="date" class="form-input rounded-sm" required>
+                            </div>
+                            <div>
+                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Time</label>
+                                <select class="form-input rounded-sm" required>
+                                    <option value="">Select Time</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Number of Guests</label>
+                            <select class="form-input rounded-sm" required>
+                                <option value="">Select Guests</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6+ People</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Special Requests</label>
+                            <textarea class="form-input rounded-sm h-24 resize-none" placeholder="Any dietary requirements or special occasions..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary rounded-sm w-full">Confirm Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
+        <div class="absolute inset-0 noise-overlay"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">VISUAL JOURNEY</p>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                    Our Gallery
+                </h2>
+                <div class="section-divider animate-on-scroll stagger-2"></div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-1 cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=400&fit=crop" alt="Gourmet dish" class="w-full h-full object-cover">
+                    <div class="gallery-overlay flex items-end p-4">
+                        <span class="text-sm font-display tracking-wider">Gourmet Selection</span>
+                    </div>
+                </div>
+                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-2 cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop" alt="Restaurant interior" class="w-full h-full object-cover">
+                    <div class="gallery-overlay flex items-end p-4">
+                        <span class="text-sm font-display tracking-wider">Ambient Dining</span>
+                    </div>
+                </div>
+                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-3 cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=400&fit=crop" alt="Fresh salad" class="w-full h-full object-cover">
+                    <div class="gallery-overlay flex items-end p-4">
+                        <span class="text-sm font-display tracking-wider">Fresh Ingredients</span>
+                    </div>
+                </div>
+                <div class="gallery-item aspect-square rounded-sm overflow-hidden md:col-span-2 animate-on-scroll stagger-4 cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop" alt="Fine dining" class="w-full h-full object-cover">
+                    <div class="gallery-overlay flex items-end p-4">
+                        <span class="text-sm font-display tracking-wider">Culinary Art</span>
+                    </div>
+                </div>
+                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-5 cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=400&fit=crop" alt="Dessert" class="w-full h-full object-cover">
+                    <div class="gallery-overlay flex items-end p-4">
+                        <span class="text-sm font-display tracking-wider">Sweet Finale</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 hero-bg"></div>
+        <div class="absolute inset-0 noise-overlay"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">GUEST EXPERIENCES</p>
+                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                    What Our Guests Say
+                </h2>
+                <div class="section-divider animate-on-scroll stagger-2"></div>
+            </div>
+
+            <!-- Testimonials Carousel -->
+            <div class="relative" id="testimonialCarousel">
+                <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 scrollbar-hide" style="scrollbar-width: none;">
+                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-3">
+                        <div class="flex items-center gap-1 mb-4">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <p class="text-[var(--muted)] leading-relaxed mb-6">"An extraordinary dining experience. The Spanish Burger was absolutely divine, and the ambiance transported us to another world."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
+                                <span class="font-display text-[var(--accent)]">AK</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">Ahmed Khalid</p>
+                                <p class="text-xs text-[var(--muted)]">Food Critic</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-4">
+                        <div class="flex items-center gap-1 mb-4">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <p class="text-[var(--muted)] leading-relaxed mb-6">"The healthy juices are a game changer! Fresh, delicious, and you can taste the quality in every sip. My go-to spot for wellness drinks."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
+                                <span class="font-display text-[var(--accent)]">SM</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">Sara Mohamed</p>
+                                <p class="text-xs text-[var(--muted)]">Regular Guest</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-5">
+                        <div class="flex items-center gap-1 mb-4">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <p class="text-[var(--muted)] leading-relaxed mb-6">"Best wraps in the city! The Mathafi Wrap with fries is perfection. Service is impeccable and the atmosphere is simply elegant."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
+                                <span class="font-display text-[var(--accent)]">OR</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">Omar Rahman</p>
+                                <p class="text-xs text-[var(--muted)]">Business Executive</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0">
+                        <div class="flex items-center gap-1 mb-4">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <p class="text-[var(--muted)] leading-relaxed mb-6">"The Singapore Fried Rice took me back to my travels in Asia. Authentic flavors with a premium twist. A must-visit for food lovers!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
+                                <span class="font-display text-[var(--accent)]">FA</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">Fatima Al-Hassan</p>
+                                <p class="text-xs text-[var(--muted)]">Travel Blogger</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Indicators -->
+                <div class="flex justify-center gap-2 mt-4">
+                    <button class="w-8 h-1 bg-[var(--accent)] rounded-full transition-all" data-index="0"></button>
+                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="1"></button>
+                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="2"></button>
+                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="3"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
+        <div class="absolute inset-0 noise-overlay"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div>
+                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">GET IN TOUCH</p>
+                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
+                        Visit Us
+                    </h2>
+                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
+
+                    <div class="space-y-8 mt-8">
+                        <div class="flex items-start gap-4 animate-on-scroll stagger-3">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Location</h4>
+                                <p class="text-[var(--muted)] text-sm">Al Waab Street, Doha, Qatar</p>
+                                <a href="#" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Get Directions</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 animate-on-scroll stagger-4">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Phone</h4>
+                                <p class="text-[var(--muted)] text-sm">+974 5000 0000</p>
+                                <a href="tel:+97450000000" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Call Now</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 animate-on-scroll stagger-5">
+                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Email</h4>
+                                <p class="text-[var(--muted)] text-sm">info@tastyworld.qa</p>
+                                <a href="mailto:info@tastyworld.qa" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Send Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="animate-on-scroll stagger-3">
+                    <div class="aspect-video rounded-sm overflow-hidden border border-[var(--border)]">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.123456789!2d51.5!3d25.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDE4JzAwLjAiTiA1McKwMzAnMDAuMCJF!5e0!3m2!1sen!2sqa!4v1234567890"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            title="Restaurant Location">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <svg width="50" height="50" viewBox="0 0 100 100" fill="none" class="mx-auto mb-6">
-            <circle cx="50" cy="50" r="46" stroke="#c9a227" stroke-width="1.5"/>
-            <path d="M30 70 L50 25 L70 70" stroke="#c9a227" stroke-width="2"/>
-            <path d="M35 55 L65 55" stroke="#c9a227" stroke-width="2"/>
-        </svg>
-        <p class="font-serif text-xl mb-4" style="color: var(--accent-gold);">3LA ALSAJ</p>
-        <p class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">All prices in Kuwaiti Dinar (KD)</p>
-    </footer>
-
-    <!-- WhatsApp Button -->
-    <a href="https://wa.me/96512345678?text=Hello! I want to place an order" target="_blank" class="wa-btn" id="waBtn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-    </a>
-
-    <script>
-        // ================== DATA ==================
-        const menuData = [
-            { name: "Kaak Musahab", desc: "Garlic, special sauce, pickled cucumber, potatoes, mix cheese", price: 1.500, cat: "grill", img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600&q=80" },
-            { name: "Chicken Musahab Lebanese Bread", desc: "Garlic, special sauce, pickled cucumber, potatoes", price: 0.850, cat: "grill", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
-            { name: "Shish Tawooq Lebanese Bread", desc: "Garlic, special sauce, pickled cucumber, potatoes", price: 0.850, cat: "grill", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" },
-            { name: "Kabab Sandwich Lebanese Bread", desc: "Tahni, parsley, onion and tomato", price: null, cat: "grill", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80" },
-            { name: "Half Charcoal Grilled Chicken", desc: "Charcoal chicken, potatoes, sauce, bread", price: 1.500, cat: "bbq", img: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&q=80" },
-            { name: "Whole Chicken", desc: "Marinated with lemon and olive oil, grilled over charcoal", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=600&q=80" },
-            { name: "Boneless Chicken Charcoal", desc: "Marinated with yogurt, lemon, herbs", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=600&q=80" },
-            { name: "Tawooq Shish Meal", desc: "3 Skewers of marinated chicken breast fillet", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
-            { name: "Kabab Halabi Meal", desc: "3 Skewers of fresh Australian lamb", price: 2.650, cat: "bbq", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80" },
-            { name: "Mix Grill Meal", desc: "Tawooq, kebab, tikka, fries and coleslaw", price: 2.500, cat: "bbq", img: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" },
-            { name: "Fajita Chicken Sandwich", desc: "Cajun spices, mozzarella, BBQ sauce", price: 1.250, cat: "steak", img: "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600&q=80" },
-            { name: "Philadelphia Steak", desc: "Grilled steak with onions, peppers, cheddar", price: 1.250, cat: "steak", img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" },
-            { name: "Steak Special Chicken", desc: "Marinated chicken, mozzarella, cheddar", price: null, cat: "steak", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
-            { name: "Steak Special Meat", desc: "Marinated beef, mozzarella, cheddar", price: null, cat: "steak", img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&q=80" },
-            { name: "Shawarma Beef Kaak", desc: "Beef shawarma, special tahini and onions", price: 1.100, cat: "shawarma", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" },
-            { name: "Chicken Shawarma", desc: "Marinated chicken breast and thigh slices", price: null, cat: "shawarma", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
-            { name: "Meat Shawarma", desc: "Australian lamb with Middle Eastern spices", price: null, cat: "shawarma", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80" },
-            { name: "Chicken Shawarma Kaak", desc: "Garlic, pickled cucumber, potatoes, cheese", price: 1.050, cat: "shawarma", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" },
-            { name: "Half Chicken and Rice", desc: "Charcoal grilled chicken, spiced rice, dakous", price: 2.750, cat: "rice", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
-            { name: "Boneless Chicken and Rice", desc: "Marinated boneless chicken, spiced rice", price: 2.750, cat: "rice", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80" },
-            { name: "Shish Tawook and Rice", desc: "2 skewers chicken breast, steamed rice", price: 2.500, cat: "rice", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
-            { name: "Kabab and Rice", desc: "2 skewers Australian lamb, steamed rice", price: 2.500, cat: "rice", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80" },
-            { name: "Family Mixed Grill", desc: "Large platter of mixed grills for family", price: 19.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" },
-            { name: "Family Rice with Chicken", desc: "Two marinated chickens with spiced rice", price: 6.950, cat: "ramadan", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
-            { name: "Mix Combo Deal", desc: "Mix shawarma saj, fries, Kinza drink", price: 2.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80" },
-            { name: "Chicken/Boneless Rice Deal", desc: "Special Ramadan offer", price: 2.000, cat: "ramadan", img: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&q=80" },
-        ];
-
-        const categoryMap = {
-            grill: 'Grill Sandwich',
-            bbq: 'BBQ',
-            steak: 'Steak Sandwich',
-            shawarma: 'Shawarma',
-            rice: 'Grilled Rice',
-            ramadan: 'Ramadan Offers'
-        };
-
-        // ================== VARS ==================
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        let dotX = 0, dotY = 0;
-        let lenis = null;
-
-        const preloader = document.getElementById('preloader');
-        const preloaderBar = document.getElementById('preloaderBar');
-        const preloaderText = document.getElementById('preloaderText');
-        const cursor = document.getElementById('cursor');
-        const cursorDot = document.getElementById('cursorDot');
-        const menuGrid = document.getElementById('menuGrid');
-        const waBtn = document.getElementById('waBtn');
-
-        // ================== FUNCTIONS ==================
-        
-        function openWhatsApp() {
-            window.open('https://wa.me/96512345678?text=Hello! I want to place an order from 3LA ALSAJ', '_blank');
-        }
-
-        function orderItem(name) {
-            const msg = encodeURIComponent(`Hello! I would like to order: ${name}`);
-            window.open(`https://wa.me/96512345678?text=${msg}`, '_blank');
-        }
-
-        function renderMenu(cat = 'all') {
-            const filtered = cat === 'all' ? menuData : menuData.filter(i => i.cat === cat);
-            menuGrid.innerHTML = '';
-
-            filtered.forEach((item, i) => {
-                const card = document.createElement('div');
-                card.className = 'menu-card';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(60px) scale(0.98)';
-                
-                const price = item.price ? `KD ${item.price.toFixed(3)}` : 'Price on Selection';
-
-                card.innerHTML = `
-                    <div class="menu-img-wrap">
-                        <img src="${item.img}" alt="${item.name}" class="menu-img" loading="lazy">
-                        <div class="menu-overlay"></div>
-                    </div>
-                    <div class="menu-body">
-                        <span class="menu-cat">${categoryMap[item.cat] || item.cat}</span>
-                        <h3 class="menu-title">${item.name}</h3>
-                        <p class="menu-desc">${item.desc}</p>
-                        <div class="menu-footer">
-                            <span class="menu-price">${price}</span>
-                            <button class="btn-order" onclick="orderItem('${item.name}')">Order</button>
+    <footer class="py-12 border-t border-[var(--border)]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-12 items-center">
+                <!-- Logo -->
+                <div class="text-center md:text-left">
+                    <div class="flex items-center gap-3 justify-center md:justify-start mb-4">
+                        <div class="logo-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="font-display text-lg font-semibold tracking-wider">TASTY WORLD</h1>
+                            <p class="text-[0.65rem] tracking-[0.3em] text-[var(--muted)]">CAFETERIA</p>
                         </div>
                     </div>
-                `;
-                menuGrid.appendChild(card);
+                    <p class="text-[var(--muted)] text-sm">Premium Dining Experience</p>
+                </div>
+
+                <!-- Social Links -->
+                <div class="flex justify-center gap-6">
+                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Snapchat">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2 5.28V20l4-2 4 2 4-2v-4.72c1.24-1.41 2-3.25 2-5.28 0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center md:text-right">
+                    <p class="text-xs text-[var(--muted)] tracking-wider mb-3">QUICK LINKS</p>
+                    <div class="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
+                        <a href="#menu" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Menu</a>
+                        <a href="#reservation" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Reservations</a>
+                        <a href="#contact" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Contact</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-[var(--border)] mt-8 pt-8 text-center">
+                <p class="text-xs text-[var(--muted)]">2024 Tasty World Cafeteria. All rights reserved. Crafted with passion.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white hover:text-[var(--accent)] transition-colors" aria-label="Close">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <img src="" alt="Gallery image" id="lightboxImg">
+    </div>
+
+    <!-- Reservation Confirmation Modal -->
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible transition-all" id="confirmationModal">
+        <div class="glass-card rounded-sm p-8 max-w-md mx-6 text-center transform scale-90 transition-all">
+            <div class="w-16 h-16 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center mx-auto mb-6">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            <h3 class="font-display text-2xl tracking-wider mb-4">Reservation Confirmed</h3>
+            <p class="text-[var(--muted)] mb-6">Thank you for choosing Tasty World Cafeteria. We look forward to serving you.</p>
+            <button onclick="closeConfirmation()" class="btn-primary rounded-sm">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Menu Data
+        const menuData = {
+            juices: [
+                { name: "Healthy Juices", price: "15 QR", desc: "Iron Booster, Liver Cure, Weight Loss, Power Booster", badge: true },
+                { name: "Fresh Juice", price: "4 - 15 QR", desc: "Kiwi, Mango, Watermelon, Guava, Sweet Melon, Lemon Mint, Cocktail, Avocado, Papaya, Banana, Strawberry, Orange, Chikku, Carrot, Pineapple, Pomegranate" },
+                { name: "Special Juices", price: "8 - 16 QR", desc: "Abood, Avil Milk, Burj Aspire, By Five" },
+                { name: "Bottle Juices", price: "25 - 45 QR", desc: "Mango, Cocktail, Lemon Mint, Orange, Pomegranate, Avocado" }
+            ],
+            wraps: [
+                { name: "Mathafi Wrap", price: "10 - 13 QR", desc: "Served with fries", badge: true },
+                { name: "Fillet Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Nuggets Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Zinker Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Tikka Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Hotdog Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Egg Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Prawns Wrap", price: "10 - 13 QR", desc: "Served with fries" },
+                { name: "Mega Bairuth Plate", price: "13 QR", desc: "Special platter" },
+                { name: "Arabic Rubiyan Plate", price: "20 QR", desc: "Premium seafood" },
+                { name: "Sheesh Tawook Arabi", price: "13 QR", desc: "Traditional favorite" },
+                { name: "Calzoni Club", price: "17 QR", desc: "Signature calzone" },
+                { name: "Calzoni Combo", price: "14 QR", desc: "Value combo" },
+                { name: "Calzoni Burger", price: "15 QR", desc: "Fusion special" }
+            ],
+            burgers: [
+                { name: "Spanish Spicy Zinker", price: "20 QR", desc: "Signature Spanish flavors", badge: true },
+                { name: "Spanish Combo", price: "15 QR", desc: "Complete meal" },
+                { name: "Spanish Burger", price: "15 QR", desc: "Classic Spanish taste" },
+                { name: "Spanish Club", price: "18 QR", desc: "Premium selection" },
+                { name: "Spanish Twister", price: "15 QR", desc: "Twisted flavors" },
+                { name: "Italian Twister", price: "13 QR", desc: "Italian herbs & spices" },
+                { name: "Italian BMT", price: "13 QR", desc: "Big Meaty Taste" },
+                { name: "Italian Club", price: "17 QR", desc: "Premium Italian" },
+                { name: "Italian Burger", price: "13 QR", desc: "Classic Italian" },
+                { name: "Italian Spicy Burger", price: "14 QR", desc: "With a kick" },
+                { name: "Double Grilled Chicken", price: "20 QR", desc: "Double the flavor" },
+                { name: "Grilled Chicken Burger", price: "15 QR", desc: "Healthy choice" }
+            ],
+            rice: [
+                { name: "Veg Fried Rice", price: "13 QR", desc: "Fresh vegetables" },
+                { name: "Chicken Fried Rice", price: "15 QR", desc: "Tender chicken pieces" },
+                { name: "Prawns Fried Rice", price: "18 QR", desc: "Fresh prawns", badge: true },
+                { name: "Singapore Fried Rice", price: "16 QR", desc: "Asian inspired" },
+                { name: "Chicken Noodles", price: "13 QR", desc: "Wok tossed" },
+                { name: "Beef Noodles", price: "15 QR", desc: "Tender beef strips" },
+                { name: "Mix Noodles", price: "16 QR", desc: "Chicken & beef" },
+                { name: "Singapore Noodles", price: "15 QR", desc: "Curry flavored" },
+                { name: "Nuggets Plate", price: "10 QR", desc: "Crispy & golden" },
+                { name: "Jumbo Prawns", price: "20 QR", desc: "King prawns" },
+                { name: "Chicken Fillet Plate", price: "15 QR", desc: "Juicy fillet" },
+                { name: "Fish Fillet Plate", price: "16 QR", desc: "Fresh fish" },
+                { name: "Kabab Plate", price: "14 QR", desc: "Grilled perfection" },
+                { name: "Spring Roll", price: "8 QR", desc: "Chicken or Veg" },
+                { name: "Cheese Stick Plate", price: "12 QR", desc: "Crispy outside, gooey inside" }
+            ]
+        };
+
+        // DOM Elements
+        const customCursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        const navbar = document.getElementById('navbar');
+        const menuTabs = document.querySelectorAll('.menu-tab');
+        const menuItemsContainer = document.getElementById('menuItems');
+        const featuredImage = document.getElementById('featuredImage');
+        const featuredName = document.getElementById('featuredName');
+        const featuredDesc = document.getElementById('featuredDesc');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const reservationForm = document.getElementById('reservationForm');
+        const confirmationModal = document.getElementById('confirmationModal');
+
+        // Initialize
+        let currentCategory = 'juices';
+        let lastScrollY = 0;
+
+        // Custom Cursor
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => {
+                if (customCursor && cursorDot) {
+                    customCursor.style.left = e.clientX + 'px';
+                    customCursor.style.top = e.clientY + 'px';
+                    cursorDot.style.left = e.clientX + 'px';
+                    cursorDot.style.top = e.clientY + 'px';
+                }
             });
 
-            // Animate cards in
-            requestAnimationFrame(() => {
-                gsap.to('.menu-card', {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    duration: 1.2,
-                    stagger: 0.1,
-                    ease: 'power3.out',
-                    overwrite: true
-                });
+            document.querySelectorAll('a, button, .menu-item, .gallery-item').forEach(el => {
+                el.addEventListener('mouseenter', () => customCursor && customCursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => customCursor && customCursor.classList.remove('hover'));
             });
         }
 
-        // ================== CURSOR ==================
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            dotX += (mouseX - dotX) * 0.3;
-            dotY += (mouseY - dotY) * 0.3;
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-            if (cursor) cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
-            if (cursorDot) cursorDot.style.transform = `translate(${dotX}px, ${dotY}px)`;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-            requestAnimationFrame(animateCursor);
-        }
-
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
         });
 
-        document.querySelectorAll('a, button, .menu-card').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hover'));
+        // Navbar Background on Scroll
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            if (scrollY > 100) {
+                navbar.style.background = 'rgba(11, 11, 11, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+                navbar.style.borderBottom = '1px solid var(--border)';
+            } else {
+                navbar.style.background = 'transparent';
+                navbar.style.backdropFilter = 'none';
+                navbar.style.borderBottom = 'none';
+            }
+            
+            lastScrollY = scrollY;
         });
 
-        // ================== LENIS ==================
-        function initLenis() {
-            lenis = new Lenis({
-                duration: 1.5,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                smoothTouch: false,
-                touchMultiplier: 2,
+        // Mobile Menu Toggle
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                const spans = menuToggle.querySelectorAll('span');
+                mobileMenu.classList.toggle('active');
+                
+                if (mobileMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
             });
-
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-            gsap.ticker.lagSmoothing(0);
         }
 
-        // ================== ANIMATIONS ==================
-        function initAnimations() {
-            gsap.registerPlugin(ScrollTrigger);
-
-            // Hero Video Zoom
-            gsap.to('#heroMedia', {
-                scale: 1.08,
-                duration: 25,
-                ease: 'none',
-                repeat: -1,
-                yoyo: true
-            });
-
-            // Hero Timeline
-            const heroTL = gsap.timeline({ delay: 0.8 });
-            heroTL
-                .to('#heroLabel', { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' })
-                .to('#heroTitle', { opacity: 1, duration: 1.6, ease: 'power3.out' }, '-=1')
-                .to('#heroDivider', { scaleX: 1, opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=1')
-                .to('#heroSubtitle', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.8')
-                .to('#scrollCue', { opacity: 1, duration: 1, ease: 'power2.out' }, '-=0.5');
-
-            // Section Dividers
-            gsap.to('#menuDivider', {
-                scaleX: 1, duration: 1.2, ease: 'power3.out',
-                scrollTrigger: { trigger: '#menu', start: 'top 70%' }
-            });
-
-            gsap.to('#locDivider', {
-                scaleX: 1, duration: 1.2, ease: 'power3.out',
-                scrollTrigger: { trigger: '#location', start: 'top 70%' }
-            });
-
-            // About Section
-            gsap.fromTo('#aboutImg', 
-                { opacity: 0, x: -100 },
-                { opacity: 1, x: 0, duration: 1.6, ease: 'power3.out',
-                  scrollTrigger: { trigger: '#about', start: 'top 60%' }
+        // Mobile Links Close
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
                 }
-            );
-            gsap.fromTo('#aboutContent', 
-                { opacity: 0, x: 100 },
-                { opacity: 1, x: 0, duration: 1.6, ease: 'power3.out',
-                  scrollTrigger: { trigger: '#about', start: 'top 60%' }
-                }
-            );
-
-            // Parallax
-            gsap.to('#parallaxBg', {
-                yPercent: 25, ease: 'none',
-                scrollTrigger: { trigger: '.parallax-section', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
             });
+        });
 
-            // Location
-            gsap.fromTo('#locationInfo', 
-                { opacity: 0, x: -80 },
-                { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out',
-                  scrollTrigger: { trigger: '#location', start: 'top 60%' }
-                }
-            );
-            gsap.fromTo('#mapWrap', 
-                { opacity: 0, x: 80 },
-                { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out',
-                  scrollTrigger: { trigger: '#location', start: 'top 60%' }
-                }
-            );
+        // Menu Tabs
+        menuTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                menuTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.category;
+                renderMenu(currentCategory);
+            });
+        });
 
-            // WhatsApp Button
-            gsap.to('#waBtn', { opacity: 1, y: 0, duration: 1, delay: 2.5, ease: 'power3.out' });
+        // Render Menu
+        function renderMenu(category) {
+            if (!menuItemsContainer || !menuData[category]) return;
+            
+            const items = menuData[category];
+            const images = {
+                juices: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=600&h=600&fit=crop',
+                wraps: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600&h=600&fit=crop',
+                burgers: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=600&fit=crop',
+                rice: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&h=600&fit=crop'
+            };
+
+            menuItemsContainer.innerHTML = items.map((item, index) => `
+                <div class="menu-item" onmouseenter="updateFeatured('${item.name}', '${item.desc}', '${images[category]}')">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="item-name font-display tracking-wider transition-colors">${item.name}</h4>
+                                ${item.badge ? '<span class="chef-badge">Chef\'s Choice</span>' : ''}
+                            </div>
+                            <p class="text-[var(--muted)] text-sm">${item.desc}</p>
+                        </div>
+                        <div class="text-[var(--accent)] font-display tracking-wider text-lg">${item.price}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update featured image
+            if (featuredImage && items[0]) {
+                featuredImage.src = images[category];
+                featuredName.textContent = items[0].name;
+                featuredDesc.textContent = items[0].desc;
+            }
         }
 
-        // ================== FILTER ==================
-        document.getElementById('filterWrap').addEventListener('click', e => {
-            if (e.target.classList.contains('filter-btn')) {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                renderMenu(e.target.dataset.cat);
+        // Update Featured Item
+        function updateFeatured(name, desc, image) {
+            if (featuredName) featuredName.textContent = name;
+            if (featuredDesc) featuredDesc.textContent = desc;
+            if (featuredImage) featuredImage.src = image;
+        }
+
+        // Lightbox
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            if (img && lightbox && lightboxImg) {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightbox() {
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Reservation Form
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showConfirmation();
+            });
+        }
+
+        function showConfirmation() {
+            if (confirmationModal) {
+                confirmationModal.style.opacity = '1';
+                confirmationModal.style.visibility = 'visible';
+                confirmationModal.querySelector('.glass-card').style.transform = 'scale(1)';
+            }
+        }
+
+        function closeConfirmation() {
+            if (confirmationModal) {
+                confirmationModal.style.opacity = '0';
+                confirmationModal.style.visibility = 'hidden';
+                confirmationModal.querySelector('.glass-card').style.transform = 'scale(0.9)';
+                if (reservationForm) reservationForm.reset();
+            }
+        }
+
+        // Floating Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            const particleCount = window.innerWidth < 768 ? 20 : 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute rounded-full';
+                particle.style.width = Math.random() * 3 + 1 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = 'var(--accent)';
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${Math.random() * 4 + 4}s ease-in-out infinite`;
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu('juices');
+            createParticles();
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeConfirmation();
             }
         });
 
-        // ================== INIT ==================
-        function init() {
-            // Cursor loop
-            animateCursor();
-
-            // Smooth scroll
-            initLenis();
-
-            // Preloader Animation
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    preloader.style.pointerEvents = 'none';
-                    initAnimations();
-                    renderMenu();
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
-
-            tl.to(preloaderBar, { width: '100%', duration: 2.5, ease: 'power2.inOut' })
-              .to(preloaderText, { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.8')
-              .to(preloader, { opacity: 0, duration: 0.8, ease: 'power2.inOut' }, '+=0.3');
-        }
-
-        window.addEventListener('DOMContentLoaded', init);
+        });
     </script>
 </body>
 </html>
