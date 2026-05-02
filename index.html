@@ -1,910 +1,1816 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#05060f">
-  <meta name="description" content="Sukoon Apartments Muscat – Daily stays, booked in minutes. Room, 1BR, 2BR & Heritage stays across Muscat.">
-  <title>Sukoon Apartments Muscat | Your Peaceful Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAFFTEAN | Homemade Coffee with Amazing Vibes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #1a1a1a;
+            --bg-darker: #111111;
+            --accent-warm: #e8a87c;
+            --accent-orange: #d97706;
+            --accent-light: #fcd9b6;
+            --text-white: #ffffff;
+            --text-muted: #a3a3a3;
+            --card-bg: rgba(30, 30, 30, 0.95);
+        }
 
-  <link rel="manifest" href="data:application/json;base64,eyogICJuYW1lIjogIlN1a29vbiBBcGFydG1lbnRzIiwKICAic2hvcnRfbmFtZSI6ICJTdWtvb24iLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwNTA2MGYiLAogICJ0aGVtZV9jb2xvciI6ICIjNzNkNmZmIiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJodHRwczovL2ltZy5pY29ucy5jb20vaWNvbnMvZmx1ZW50LzI0LzQ4L2hvdXNlLWNpdHkucG5nIiwKICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgfV0KfQ==">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Sukoon">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-<style>
-:root{
-  --bg:#05060f;--bg-soft:#0c1022;
-  --glass:rgba(255,255,255,0.07);--glass-strong:rgba(255,255,255,0.13);
-  --text:#ecf1ff;--muted:#9aa3c4;
-  --brand:#73d6ff;--brand-2:#c084fc;--gold:#ffd889;--success:#94f7b3;--warm:#f9a8d4;
-  --shadow:0 20px 60px rgba(0,0,0,0.5);
-  --radius:22px;
-  --g-brand:linear-gradient(135deg,#73d6ff,#c084fc);
-  --g-warm:linear-gradient(135deg,#f9a8d4,#ffd889);
-  --g-gold:linear-gradient(135deg,#ffd889,#ffeec5);
-  --glow-b:0 0 30px rgba(115,214,255,0.35);
-  --glow-g:0 0 30px rgba(255,216,137,0.35);
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none}
-img{pointer-events:none;max-width:100%;display:block}
-a{text-decoration:none;color:inherit}
-button,input,select,textarea{font-family:inherit}
+        .font-display { font-family: 'Playfair Display', serif; }
 
-.noise::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;background-image:radial-gradient(rgba(255,255,255,.7) .25px,transparent .25px);background-size:2.5px 2.5px;mix-blend-mode:soft-light;z-index:0}
+        /* ========== VFX CANVASES ========== */
+        #smoke-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.8;
+        }
 
-.container{width:min(1200px,92vw);margin:0 auto;position:relative;z-index:1}
+        #dust-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            pointer-events: none;
+        }
 
-/* ===== BG GLOWS ===== */
-body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-body::before{width:600px;height:600px;background:rgba(115,214,255,0.08);top:-15%;right:-10%}
-body::after{width:500px;height:500px;background:rgba(192,132,252,0.07);bottom:-10%;left:-10%}
+        #splash-canvas {
+            position: absolute;
+            z-index: 50;
+            pointer-events: none;
+        }
 
-/* ===== SPLASH ===== */
-#splash{position:fixed;inset:0;background:#030410;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1s,visibility 1s}
-#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.sp-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(115,214,255,0.06),transparent 65%)}
-.sp-orb{position:absolute;border-radius:50%;filter:blur(70px);animation:orbF 7s ease-in-out infinite}
-.sp-o1{width:220px;height:220px;background:rgba(115,214,255,0.12);top:15%;left:25%}
-.sp-o2{width:180px;height:180px;background:rgba(192,132,252,0.1);bottom:20%;right:20%;animation-delay:2.5s}
-.sp-o3{width:140px;height:140px;background:rgba(255,216,137,0.08);top:55%;left:60%;animation-delay:4.5s}
-@keyframes orbF{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.08)}}
-.sp-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:22px}
-.sp-icon{width:110px;height:110px;border-radius:28px;background:var(--g-brand);display:grid;place-items:center;font-size:3rem;box-shadow:var(--glow-b);animation:spPulse 2.5s ease-in-out infinite}
-@keyframes spPulse{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(115,214,255,0.35)}50%{transform:scale(1.06);box-shadow:0 0 50px rgba(115,214,255,0.55)}}
-.sp-brand{text-align:center;animation:spUp 1s ease .3s both}
-@keyframes spUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-.sp-name{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5.5vw,2.8rem);font-weight:700;background:var(--g-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
-.sp-sub{font-family:'Playfair Display',serif;font-size:clamp(.75rem,2vw,1rem);font-style:italic;color:var(--gold);margin-top:6px;letter-spacing:.1em}
-.sp-divider{width:70px;height:1px;background:var(--g-brand);margin:6px auto;box-shadow:var(--glow-b)}
-.sp-ar{font-size:.85rem;color:var(--muted);margin-top:8px;direction:rtl;opacity:.7}
-.typing-box{min-height:46px;display:flex;align-items:center;justify-content:center;opacity:0;animation:spUp 1s ease .7s forwards}
-.typing-text{font-size:1.1rem;font-weight:500;color:var(--gold-light);border-right:3px solid var(--gold);padding-right:5px;animation:blnk .7s infinite;white-space:nowrap;color:var(--gold)}
-@keyframes blnk{0%,100%{border-color:var(--gold)}50%{border-color:transparent}}
-.sp-bot{font-size:.58rem;letter-spacing:.25em;color:rgba(154,163,196,.3);text-transform:uppercase;animation:spUp 1s ease 1.1s both}
+        /* ========== BACKGROUND ========== */
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(232, 168, 124, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(217, 119, 6, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+            z-index: -2;
+        }
 
-/* ===== PRELOADER ===== */
-#preloader{position:fixed;inset:0;background:var(--bg);z-index:99998;display:none;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s,visibility .8s}
-#preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.pl-bar-w{width:180px;height:3px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
-.pl-bar{height:100%;width:0;background:var(--g-brand);border-radius:10px;animation:plFill 1.6s ease forwards;box-shadow:var(--glow-b)}
-@keyframes plFill{to{width:100%}}
-.pl-text{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--brand);margin-bottom:18px;letter-spacing:.15em}
+        /* ========== NAVIGATION ========== */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 1.2rem 2rem;
+            transition: all 0.5s ease;
+            background: transparent;
+        }
 
-/* ===== MAIN ===== */
-#main-content{opacity:0;visibility:hidden;transition:opacity .6s}
-#main-content.visible{opacity:1;visibility:visible}
+        .main-nav.scrolled {
+            background: rgba(26, 26, 26, 0.97);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
 
-/* ===== NAV ===== */
-header{padding:16px 0;position:sticky;top:0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:20}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(8,10,22,0.6);border:1px solid rgba(255,255,255,.1);border-radius:999px;box-shadow:var(--shadow);transition:all .3s}
-.nav.scrolled{background:rgba(8,10,22,.88);border-color:rgba(255,255,255,.18)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;font-size:.95rem}
-.crest{width:36px;height:36px;border-radius:50%;background:var(--g-brand);color:#121525;display:grid;place-items:center;font-size:16px;box-shadow:var(--glow-b);flex-shrink:0}
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-link{padding:7px 14px;border-radius:999px;font-size:.78rem;font-weight:500;color:var(--muted);transition:all .3s}
-.nav-link:hover{background:var(--glass-strong);color:var(--text)}
-.nav-cta{background:var(--g-gold);color:#081022;padding:8px 18px;border-radius:999px;font-weight:700;font-size:.78rem;letter-spacing:.02em;transition:all .3s;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:var(--glow-g)}
-.mob-btn{display:none;background:none;border:1px solid rgba(255,255,255,.12);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.95rem;transition:all .3s;align-items:center;justify-content:center}
-.mob-btn:hover{border-color:var(--brand);color:var(--brand)}
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 
-/* ===== HERO ===== */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:55px 0 30px;min-height:88vh}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid rgba(255,255,255,.15);color:var(--brand);font-size:.78rem;margin-bottom:16px;animation:hUp .8s ease .2s both}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,60px);line-height:1.05;margin:0 0 14px;animation:hUp .8s ease .3s both}
-.hero h1 em{font-style:italic;background:var(--g-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-lead{color:var(--muted);font-size:clamp(14px,1.7vw,17px);line-height:1.7;margin-bottom:10px;max-width:56ch;animation:hUp .8s ease .4s both}
-.hero-lead strong{color:var(--text);font-weight:600}
-.hero-ar{font-size:.9rem;color:var(--gold);direction:rtl;margin-bottom:22px;opacity:.8;animation:hUp .8s ease .45s both;line-height:1.7}
-.hero-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;animation:hUp .8s ease .5s both}
-.h-chip{background:var(--glass);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px;font-size:.8rem;line-height:1.5;transition:all .3s;display:flex;align-items:flex-start;gap:10px}
-.h-chip:hover{border-color:rgba(255,255,255,.22);background:var(--glass-strong)}
-.h-chip i{color:var(--brand);margin-top:2px;font-size:.85rem}
-.hero-btns{display:flex;gap:12px;animation:hUp .8s ease .6s both}
-.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--g-brand);color:#081022;padding:14px 26px;border-radius:999px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .3s;border:none;box-shadow:var(--glow-b)}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(115,214,255,.5)}
-.btn-s{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid rgba(255,255,255,.15);color:var(--text);padding:14px 26px;border-radius:999px;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .3s}
-.btn-s:hover{background:var(--glass-strong);border-color:rgba(255,255,255,.28)}
-@keyframes hUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+            letter-spacing: 2px;
+        }
 
-/* PARALLAX */
-.media-wrap{position:relative;perspective:1000px;min-height:500px;animation:hUp 1s ease .35s both}
-.d-card{position:absolute;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);transform-style:preserve-3d;transition:transform .3s ease;will-change:transform}
-.d-card img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform .7s}
-.d-card:hover img{transform:scale(1.1)}
-.d-card.main{inset:20px 0 0 40px}
-.d-card.s1{width:200px;height:150px;left:-10px;bottom:60px}
-.d-card.s2{width:200px;height:150px;right:-10px;top:0}
-.d-card.main::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,6,15,.55) 100%)}
+        .nav-links { display: flex; gap: 36px; list-style: none; }
 
-/* ===== OFFER BANNER ===== */
-.offer-bar{background:linear-gradient(90deg,rgba(255,216,137,.08),rgba(249,168,212,.06),rgba(115,214,255,.08));border:1px solid rgba(255,216,137,.2);border-radius:16px;padding:18px 24px;display:flex;align-items:center;justify-content:center;gap:16px;margin:20px 0 0;animation:hUp .8s ease .7s both}
-.offer-bar i{color:var(--gold);font-size:1.3rem}
-.offer-bar span{font-size:.88rem;color:var(--gold);font-weight:500}
-.offer-bar strong{color:var(--text)}
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-/* ===== STATS ===== */
-.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:30px 0}
-.stat{background:var(--glass);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px 16px;text-align:center;transition:all .3s}
-.stat:hover{border-color:rgba(115,214,255,.25);transform:translateY(-3px)}
-.stat-n{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;background:var(--g-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.stat-l{font-size:.75rem;color:var(--muted);margin-top:5px;letter-spacing:.02em}
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-warm);
+            transition: width 0.3s ease;
+        }
 
-/* ===== SECTIONS ===== */
-section{padding:32px 0}
-.sec-hd{text-align:center;margin-bottom:36px}
-.sec-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
-.sec-tag::before,.sec-tag::after{content:'';width:28px;height:1px;background:var(--g-brand)}
-.sec-t{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.8vw,2.6rem);font-weight:700}
-.sec-t span{color:var(--gold)}
+        .nav-links a:hover { color: var(--text-white); }
+        .nav-links a:hover::after { width: 100%; }
 
-/* ===== FEATURES ===== */
-.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.feat-card{background:var(--glass);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px;backdrop-filter:blur(6px);transition:all .4s;position:relative;overflow:hidden}
-.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g-brand);opacity:0;transition:opacity .3s}
-.feat-card:hover{border-color:rgba(115,214,255,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-.feat-card:hover::before{opacity:1}
-.feat-ic{width:44px;height:44px;border-radius:13px;background:rgba(115,214,255,.08);border:1px solid rgba(115,214,255,.18);display:grid;place-items:center;font-size:1.2rem;margin-bottom:14px;transition:all .3s}
-.feat-card:hover .feat-ic{background:rgba(115,214,255,.18);box-shadow:var(--glow-b)}
-.feat-card h3{margin:0 0 8px;font-size:.95rem;font-weight:600}
-.feat-card p{margin:0;color:var(--muted);line-height:1.6;font-size:.82rem}
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent-orange), #b45309);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(217, 119, 6, 0.35);
+        }
 
-/* ===== ROOMS ===== */
-.room-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.room-card{background:var(--glass);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);overflow:hidden;transition:all .4s;position:relative}
-.room-card:hover{border-color:rgba(115,214,255,.3);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.room-img{height:200px;overflow:hidden;position:relative}
-.room-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
-.room-card:hover .room-img img{transform:scale(1.08)}
-.room-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(5,6,15,.6) 100%)}
-.room-badge{position:absolute;top:14px;right:14px;background:var(--g-warm);color:#081022;padding:5px 14px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.05em;z-index:1}
-.room-body{padding:22px}
-.room-body h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:6px}
-.room-body p{color:var(--muted);font-size:.83rem;line-height:1.55;margin-bottom:14px}
-.room-features{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.room-feat{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--muted);background:rgba(255,255,255,.04);padding:5px 10px;border-radius:8px}
-.room-feat i{color:var(--brand);font-size:.65rem}
-.room-bottom{display:flex;align-items:center;justify-content:space-between}
-.room-price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700}
-.room-price span{font-size:.8rem;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif}
-.room-book{background:var(--g-brand);color:#081022;padding:10px 22px;border-radius:999px;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .3s;border:none}
-.room-book:hover{transform:scale(1.05);box-shadow:var(--glow-b)}
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(217, 119, 6, 0.5);
+        }
 
-/* ===== LOCATIONS ===== */
-.loc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.loc-card{background:var(--glass);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px;display:flex;align-items:center;gap:16px;transition:all .3s;cursor:pointer}
-.loc-card:hover{border-color:rgba(115,214,255,.25);background:var(--glass-strong)}
-.loc-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
-.loc-icon.blue{background:rgba(115,214,255,.08);border:1px solid rgba(115,214,255,.18)}
-.loc-icon.purple{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.18)}
-.loc-icon.gold{background:rgba(255,216,137,.08);border:1px solid rgba(255,216,137,.18)}
-.loc-icon.warm{background:rgba(249,168,212,.08);border:1px solid rgba(249,168,212,.18)}
-.loc-card h4{font-size:.95rem;margin-bottom:3px}
-.loc-card p{font-size:.8rem;color:var(--muted)}
-.loc-card .loc-tag{margin-left:auto;font-size:.65rem;padding:4px 10px;border-radius:999px;background:rgba(148,247,179,.1);border:1px solid rgba(148,247,179,.2);color:var(--success);white-space:nowrap;font-weight:600}
+        /* ========== HERO SECTION ========== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* ===== SERVICES ===== */
-.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.srv-card{background:var(--glass);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;text-align:center;transition:all .3s}
-.srv-card:hover{border-color:rgba(192,132,252,.3);transform:translateY(-3px)}
-.srv-card i{font-size:1.5rem;margin-bottom:12px;display:block;color:var(--brand-2)}
-.srv-card h4{font-size:.9rem;margin-bottom:6px}
-.srv-card p{font-size:.78rem;color:var(--muted);line-height:1.5}
+        .hero-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
 
-/* ===== BOOKING ===== */
-.book-section{background:var(--glass);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
-.book-info h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:14px}
-.book-info p{color:var(--muted);line-height:1.7;margin-bottom:18px;font-size:.9rem}
-.book-info .book-ar{direction:rtl;font-size:.9rem;color:var(--gold);opacity:.8;margin-bottom:18px;line-height:1.8}
-.ci{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.ci-icon{width:40px;height:40px;border-radius:12px;background:rgba(115,214,255,.08);border:1px solid rgba(115,214,255,.18);display:grid;place-items:center;color:var(--brand);font-size:.85rem;flex-shrink:0}
-.ci-text{font-size:.88rem}
-.ci-text strong{display:block;margin-bottom:1px}
-.ci-text span{color:var(--muted);font-size:.78rem}
-.book-form{display:flex;flex-direction:column;gap:12px}
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.f-inp{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 16px;color:var(--text);font-size:.88rem;outline:none;transition:all .3s}
-.f-inp:focus{border-color:var(--brand);background:rgba(115,214,255,.04);box-shadow:0 0 0 3px rgba(115,214,255,.08)}
-.f-inp::placeholder{color:rgba(154,163,196,.35)}
-.f-sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa3c4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-.f-sub{background:var(--g-gold);color:#081022;padding:14px;border-radius:999px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .3s;border:none;display:flex;align-items:center;justify-content:center;gap:8px}
-.f-sub:hover{transform:translateY(-2px);box-shadow:var(--glow-g)}
-.f-sub.success{background:linear-gradient(135deg,#94f7b3,#22c55e)}
+        .hero-content { position: relative; z-index: 10; }
 
-/* ===== GALLERY ===== */
-.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,170px);gap:12px}
-.gal-item{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);position:relative;cursor:pointer;transition:all .4s}
-.gal-item:hover{border-color:rgba(115,214,255,.3);transform:scale(1.02);z-index:2}
-.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.gal-item:hover img{transform:scale(1.1)}
-.gal-item:nth-child(1){grid-column:span 2;grid-row:span 2}
-.gal-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(5,6,15,.4) 100%);pointer-events:none}
-.gal-label{position:absolute;bottom:10px;left:12px;z-index:1;font-size:.75rem;font-weight:500;color:white;text-shadow:0 2px 8px rgba(0,0,0,.5);opacity:0;transition:opacity .3s}
-.gal-item:hover .gal-label{opacity:1}
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(232, 168, 124, 0.12);
+            border: 1px solid rgba(232, 168, 124, 0.25);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            color: var(--accent-warm);
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
 
-/* ===== FOOTER ===== */
-footer{padding:28px 0;margin-top:16px;border-top:1px solid rgba(255,255,255,.06)}
-.ft-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-.ft-brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem}
-.ft-links{display:flex;gap:18px}
-.ft-links a{font-size:.78rem;color:var(--muted);transition:color .3s}
-.ft-links a:hover{color:var(--brand)}
-.ft-copy{font-size:.7rem;color:rgba(154,163,196,.3)}
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-warm);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
 
-/* ===== WHATSAPP ===== */
-.wa-float{position:fixed;bottom:26px;right:26px;z-index:9998;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;font-size:1.6rem;color:white;box-shadow:0 8px 25px rgba(37,211,102,.4);cursor:pointer;transition:all .3s;animation:waP 2s ease-in-out infinite}
-.wa-float:hover{transform:scale(1.1);box-shadow:0 8px 35px rgba(37,211,102,.6)}
-@keyframes waP{0%,100%{box-shadow:0 8px 25px rgba(37,211,102,.4)}50%{box-shadow:0 8px 40px rgba(37,211,102,.7)}}
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
 
-/* ===== INSTALL MODAL ===== */
-#install-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999999;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(20px)}
-#install-modal.active{display:flex}
-.ins-c{width:100%;max-width:370px;background:linear-gradient(145deg,rgba(12,16,34,.96),rgba(5,6,15,.98));border:1px solid rgba(115,214,255,.2);border-radius:22px;padding:28px;text-align:center;position:relative;overflow:hidden;animation:insIn .4s ease}
-@keyframes insIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-.ins-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g-brand)}
-.ins-ic{width:65px;height:65px;border-radius:18px;background:rgba(115,214,255,.08);display:grid;place-items:center;font-size:1.8rem;margin:0 auto 16px}
-.ins-t{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:5px}
-.ins-s{font-size:.82rem;color:var(--muted);margin-bottom:20px;line-height:1.5}
-.ins-btn{width:100%;background:var(--g-brand);border:none;color:#081022;padding:13px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .3s;box-shadow:var(--glow-b);margin-bottom:10px}
-.ins-btn:hover{transform:scale(1.02)}
-.ins-lat{color:var(--muted);font-size:.8rem;cursor:pointer;transition:color .3s}
-.ins-lat:hover{color:var(--brand)}
-.ios-g{text-align:left;background:rgba(115,214,255,.04);border-radius:14px;padding:14px;margin-top:12px;border:1px solid rgba(115,214,255,.12)}
-.ios-g-t{font-size:.72rem;color:var(--brand);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
-.ios-st{display:flex;align-items:center;gap:8px;margin-bottom:6px;padding:7px;background:rgba(0,0,0,.25);border-radius:8px;font-size:.8rem}
-.ios-st:last-child{margin-bottom:0}
-.ios-n{width:20px;height:20px;background:var(--brand);color:#081022;border-radius:50%;display:grid;place-items:center;font-size:.65rem;font-weight:700;flex-shrink:0}
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
 
-/* ===== UTILITIES ===== */
-.scroll-prog{position:fixed;top:0;left:0;width:0;height:2px;background:var(--g-brand);z-index:99999;transition:width .1s}
-.cursor-f{position:fixed;width:18px;height:18px;border:1px solid var(--brand);border-radius:50%;pointer-events:none;z-index:99997;transition:transform .14s;transform:translate(-50%,-50%);display:none;opacity:.4}
-@media(min-width:768px){.cursor-f{display:block}}
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--g-brand);color:#081022;padding:13px 26px;border-radius:999px;font-weight:600;font-size:.88rem;z-index:999999;box-shadow:var(--glow-b);animation:tsIn .4s ease}
-@keyframes tsIn{from{opacity:0;transform:translateX(-50%) translateY(-18px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        .hero-title .highlight {
+            color: var(--accent-warm);
+            position: relative;
+            display: inline-block;
+        }
 
-/* MOBILE DRAWER */
-.mob-drawer{position:fixed;top:0;right:-100%;width:100%;max-width:300px;height:100%;background:rgba(8,10,22,.98);z-index:10001;transition:right .4s;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;padding:75px 28px 28px;backdrop-filter:blur(18px)}
-.mob-drawer.active{right:0}
-.dr-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000;opacity:0;visibility:hidden;transition:all .3s}
-.dr-ov.active{opacity:1;visibility:visible}
-.dr-link{padding:14px 0;font-size:1.05rem;font-weight:500;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.05);transition:color .3s;cursor:pointer}
-.dr-link:hover{color:var(--brand)}
-.dr-cta{margin-top:24px}
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 38px;
+            max-width: 480px;
+        }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:960px){
-  .hero{grid-template-columns:1fr;min-height:auto;padding:28px 0}
-  .media-wrap{min-height:320px}
-  .d-card.main{inset:8px 8px 0 8px}
-  .d-card.s1,.d-card.s2{display:none}
-  .feat-grid{grid-template-columns:repeat(2,1fr)}
-  .room-grid{grid-template-columns:1fr}
-  .loc-grid{grid-template-columns:1fr}
-  .srv-grid{grid-template-columns:repeat(2,1fr)}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
-  .gal-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
-  .gal-item:nth-child(1){grid-column:span 2}
-  .book-section{grid-template-columns:1fr}
-  .f-row{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .mob-btn{display:flex}
-}
-@media(max-width:600px){
-  .stats-bar{grid-template-columns:1fr 1fr;gap:10px}
-  .stat{padding:16px 12px}
-  .feat-grid{grid-template-columns:1fr}
-  .gal-grid{grid-template-columns:1fr}
-  .gal-item:nth-child(1){grid-column:span 1}
-  .hero-btns{flex-direction:column}
-  .hero-btns a,.hero-btns button{width:100%;justify-content:center}
-  .hero-chips{grid-template-columns:1fr}
-  .srv-grid{grid-template-columns:1fr}
-  .offer-bar{flex-direction:column;text-align:center;gap:8px}
-  .ft-inner{flex-direction:column;text-align:center}
-  .ft-links{justify-content:center}
-}
-</style>
+        .hero-buttons { display: flex; gap: 18px; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-orange), #c2410c);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 25px rgba(217, 119, 6, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 40px rgba(217, 119, 6, 0.55);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-warm);
+            color: var(--accent-warm);
+            background: rgba(232, 168, 124, 0.08);
+        }
+
+        /* ========== 3D COFFEE CUP SHOWCASE ========== */
+        .coffee-showcase {
+            position: relative;
+            perspective: 1200px;
+            z-index: 10;
+        }
+
+        .cup-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatCup 5s ease-in-out infinite;
+        }
+
+        @keyframes floatCup {
+            0%, 100% { transform: translateY(0) rotateY(-5deg) rotateX(3deg); }
+            50% { transform: translateY(-25px) rotateY(5deg) rotateX(-3deg); }
+        }
+
+        .cup-image-container {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            box-shadow: 
+                0 50px 100px rgba(0,0,0,0.5),
+                0 0 80px rgba(232, 168, 124, 0.12),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid rgba(232, 168, 124, 0.15);
+        }
+
+        .cup-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+        }
+
+        /* Splash Effect Container */
+        .splash-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* Floating Elements around Cup */
+        .float-element {
+            position: absolute;
+            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(232, 168, 124, 0.15);
+            padding: 14px 20px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            white-space: nowrap;
+            animation: floatElement 4s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        @keyframes floatElement {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .float-1 { top: 10%; right: -45px; animation-delay: 0s; }
+        .float-2 { bottom: 20%; left: -55px; animation-delay: 1.2s; }
+        .float-3 { bottom: 8%; right: 5%; animation-delay: 2.4s; }
+
+        .float-element .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .float-element .icon.hot { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .float-element .icon.fresh { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+        .float-element .icon.premium { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+
+        /* Steam Particles around Cup */
+        .steam-particle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+            border-radius: 50%;
+            animation: steamRise 4s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes steamRise {
+            0% { opacity: 0; transform: translateY(0) scale(0.5) translateX(0); }
+            30% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-150px) scale(1.5) translateX(30px); }
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .about-section {
+            padding: 120px 2rem;
+            position: relative;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(232, 168, 124, 0.1);
+            color: var(--accent-warm);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            border: 1px solid rgba(232, 168, 124, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .section-title span { color: var(--accent-warm); }
+
+        .about-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-image-box {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .about-image-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 24px;
+        }
+
+        .about-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            border-radius: 0 0 24px 24px;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .about-stat h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent-warm);
+        }
+
+        .about-stat p { font-size: 0.82rem; color: var(--text-muted); }
+
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 24px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.95rem;
+        }
+
+        .feature-list li svg {
+            color: var(--accent-warm);
+            flex-shrink: 0;
+        }
+
+        /* ========== SERVICES SECTION ========== */
+        .services-section {
+            padding: 120px 2rem;
+            background: var(--bg-darker);
+        }
+
+        .services-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(232, 168, 124, 0.3);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        }
+
+        .service-card-img {
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+
+        .service-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .service-card:hover .service-card-img img {
+            transform: scale(1.1);
+        }
+
+        .service-card-body {
+            padding: 26px;
+        }
+
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, rgba(232, 168, 124, 0.15), rgba(232, 168, 124, 0.05));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-warm);
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+        }
+
+        .service-card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .service-card-body p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .service-link {
+            color: var(--accent-warm);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .service-link:hover { gap: 14px; }
+
+        /* ========== PRODUCTS SECTION ========== */
+        .products-section {
+            padding: 120px 2rem;
+        }
+
+        .products-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+
+        .product-img {
+            aspect-ratio: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.08);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--accent-orange);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .product-info {
+            padding: 24px;
+        }
+
+        .product-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+        }
+
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+        }
+
+        .product-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.5);
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        .contact-section {
+            padding: 120px 2rem;
+            background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+        }
+
+        .contact-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 42px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .form-group { margin-bottom: 22px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-white);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text-white);
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--accent-warm);
+            box-shadow: 0 0 20px rgba(232, 168, 124, 0.15);
+        }
+
+        .form-textarea { min-height: 130px; resize: vertical; }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 22px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: rgba(232, 168, 124, 0.25);
+            transform: translateX(8px);
+        }
+
+        .contact-item-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(232, 168, 124, 0.15), rgba(232, 168, 124, 0.05));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-warm);
+            flex-shrink: 0;
+        }
+
+        .contact-item-text h4 { font-size: 1rem; margin-bottom: 4px; }
+        .contact-item-text p { color: var(--text-muted); font-size: 0.88rem; }
+
+        /* ========== FOOTER ========== */
+        .site-footer {
+            background: var(--bg-darker);
+            padding: 70px 2rem 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 22px;
+            color: var(--text-white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li { margin-bottom: 12px; }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--accent-warm); padding-left: 6px; }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p { color: var(--text-muted); font-size: 0.85rem; }
+
+        .social-links { display: flex; gap: 14px; }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-orange);
+            color: white;
+            transform: translateY(-4px);
+        }
+
+        /* ========== SOUND TOGGLE ========== */
+        .sound-toggle {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 999;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(232, 168, 124, 0.25);
+            color: var(--accent-warm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .sound-toggle:hover {
+            border-color: var(--accent-warm);
+            box-shadow: 0 0 25px rgba(232, 168, 124, 0.3);
+        }
+
+        .sound-toggle.muted { color: var(--text-muted); border-color: rgba(255,255,255,0.15); }
+
+        /* ========== SCROLL REVEAL ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .d1 { transition-delay: 0.1s; }
+        .d2 { transition-delay: 0.2s; }
+        .d3 { transition-delay: 0.3s; }
+        .d4 { transition-delay: 0.4s; }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content { order: 2; }
+            .coffee-showcase { order: 1; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .about-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .float-element { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-darker); }
+        ::-webkit-scrollbar-thumb { background: rgba(232, 168, 124, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(232, 168, 124, 0.5); }
+    </style>
 </head>
-<body class="noise">
+<body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="sp-bg"></div>
-  <div class="sp-orb sp-o1"></div>
-  <div class="sp-orb sp-o2"></div>
-  <div class="sp-orb sp-o3"></div>
-  <div class="sp-wrap">
-    <div class="sp-icon">🏠</div>
-    <div class="sp-brand">
-      <div class="sp-name">Sukoon Apartments</div>
-      <div class="sp-divider"></div>
-      <div class="sp-sub">Your Peaceful Home in Muscat</div>
-    </div>
-    <div class="typing-box"><div class="typing-text" id="typing-text"></div></div>
-    <p class="sp-ar">سافر، استكن، ارتاح</p>
-    <p class="sp-bot">Muscat, Sultanate of Oman</p>
-  </div>
-</div>
+    <!-- Background -->
+    <div class="page-bg"></div>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <div class="pl-text">Loading...</div>
-  <div class="pl-bar-w"><div class="pl-bar"></div></div>
-</div>
+    <!-- VFX Canvases -->
+    <canvas id="smoke-canvas"></canvas>
+    <canvas id="dust-canvas"></canvas>
 
-<!-- MAIN -->
-<div id="main-content">
-  <div class="scroll-prog" id="scroll-prog"></div>
-  <div class="cursor-f" id="cursor"></div>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <a href="#home" class="logo-text">CAFFTEAN</a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
 
-  <header>
-    <div class="container">
-      <nav class="nav" id="navbar">
-        <a href="#" class="brand"><div class="crest">🏠</div>Sukoon Apartments</a>
-        <div class="nav-links">
-          <a href="#features" class="nav-link">Features</a>
-          <a href="#rooms" class="nav-link">Rooms</a>
-          <a href="#locations" class="nav-link">Locations</a>
-          <a href="#gallery" class="nav-link">Gallery</a>
-          <a href="#booking" class="nav-link">Book</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px">
-          <a href="#booking" class="nav-cta" id="desk-cta" style="display:none"><i class="fab fa-whatsapp"></i> Book Now</a>
-          <button class="nav-cta" id="mob-cta" style="display:none" onclick="scrollToBook()"><i class="fab fa-whatsapp"></i> Book</button>
-          <button class="mob-btn" id="menu-tog" style="display:none"><i class="fas fa-bars"></i></button>
-        </div>
-      </nav>
-    </div>
-  </header>
+            <a href="#contact" class="nav-cta">Order Now</a>
 
-  <!-- MOBILE DRAWER -->
-  <div class="dr-ov" id="dr-ov"></div>
-  <div class="mob-drawer" id="mob-drawer">
-    <div class="dr-link" onclick="closeDr()">Features</div>
-    <div class="dr-link" onclick="closeDr()">Rooms</div>
-    <div class="dr-link" onclick="closeDr()">Locations</div>
-    <div class="dr-link" onclick="closeDr()">Gallery</div>
-    <div class="dr-link" onclick="closeDr()">Book</div>
-    <div class="dr-cta"><a href="#booking" class="nav-cta" style="display:block;text-align:center" onclick="closeDr()"><i class="fab fa-whatsapp"></i> Book on WhatsApp</a></div>
-  </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </nav>
 
-  <main class="container">
+    <!-- ==================== HERO / HOME SECTION ==================== -->
+    <section id="home" class="hero-section">
+        <div class="hero-grid">
+            
+            <!-- Left Content -->
+            <div class="hero-content reveal">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Premium Quality Coffee
+                </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <div class="hero-tag"><i class="fas fa-map-marker-alt"></i> Muscat, Sultanate of Oman</div>
-        <h1>Travel. Relax. <em>Unwind.</em></h1>
-        <p class="hero-lead">Daily stays, <strong>booked in minutes</strong>. Fully furnished apartments and rooms across Muscat's best locations — your home away from home.</p>
-        <p class="hero-ar">سافر، استكن، ارتاح. شقق يومية جاهزة، وحجزك خلال دقائق!</p>
-        <div class="hero-chips">
-          <div class="h-chip"><i class="fas fa-check-circle"></i> Fully Furnished</div>
-          <div class="h-chip"><i class="fas fa-check-circle"></i> Kitchen Equipped</div>
-          <div class="h-chip"><i class="fas fa-check-circle"></i> High-Speed WiFi</div>
-          <div class="h-chip"><i class="fas fa-check-circle"></i> Family Friendly</div>
+                <h1 class="hero-title">
+                    Homemade Coffee<br>with <span class="highlight">Amazing Vibes</span>
+                </h1>
+
+                <p class="hero-desc">
+                    Experience the perfect blend of rich aroma and exceptional taste. 
+                    Every cup tells a story of passion, crafted for those who appreciate the finer things in life.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">
+                        Explore Menu
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#about" class="btn-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21"/></svg>
+                        Watch Story
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: 3D Coffee Cup Showcase -->
+            <div class="coffee-showcase reveal d2">
+                <div class="cup-wrapper">
+                    <div class="cup-image-container">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=550&h=550&fit=crop" 
+                             alt="Premium Coffee Cup"
+                             id="heroCoffeeImg">
+                        
+                        <!-- Canvas for splash effects on image -->
+                        <canvas id="splash-canvas"></canvas>
+
+                        <!-- Steam Particles -->
+                        <div class="steam-particle" style="top: 5%; left: 20%; animation-delay: 0s;"></div>
+                        <div class="steam-particle" style="top: 8%; left: 50%; animation-delay: 0.8s;"></div>
+                        <div class="steam-particle" style="top: 3%; left: 75%; animation-delay: 1.6s;"></div>
+                        <div class="steam-particle" style="top: 10%; left: 35%; animation-delay: 2.4s;"></div>
+                        <div class="steam-particle" style="top: 6%; left: 65%; animation-delay: 3.2s;"></div>
+                    </div>
+
+                    <!-- Floating Badges -->
+                    <div class="float-element float-1">
+                        <span class="icon hot">🔥</span>
+                        Hot & Fresh
+                    </div>
+                    <div class="float-element float-2">
+                        <span class="icon fresh">✓</span>
+                        100% Organic
+                    </div>
+                    <div class="float-element float-3">
+                        <span class="icon premium">⭐</span>
+                        Premium Blend
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="hero-btns">
-          <a href="#booking" class="btn-p"><i class="fab fa-whatsapp"></i> Book on WhatsApp</a>
-          <a href="#rooms" class="btn-s"><i class="fas fa-eye"></i> View Rooms</a>
-        </div>
-        <div class="offer-bar">
-          <i class="fas fa-percent"></i>
-          <span><strong>Special Offer:</strong> Weekly & Monthly stays get exclusive discounts!</span>
-        </div>
-      </div>
-      <div class="media-wrap" id="parallax-zone">
-        <div class="d-card main" data-depth="18">
-          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=80" alt="Sukoon apartment living room">
-        </div>
-        <div class="d-card s1" data-depth="32">
-          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80" alt="Bedroom">
-        </div>
-        <div class="d-card s2" data-depth="28">
-          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" alt="Kitchen">
-        </div>
-      </div>
     </section>
 
-    <!-- STATS -->
-    <div class="stats-bar">
-      <div class="stat"><div class="stat-n" data-count="500">0+</div><div class="stat-l">Happy Guests</div></div>
-      <div class="stat"><div class="stat-n" data-count="4">0</div><div class="stat-l">Prime Locations</div></div>
-      <div class="stat"><div class="stat-n">4.8<span style="font-size:.55em">⭐</span></div><div class="stat-l">Guest Rating</div></div>
-      <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">WhatsApp Support</div></div>
-    </div>
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about" class="about-section">
+        <div class="section-header reveal">
+            <span class="section-tag">About Us</span>
+            <h2 class="section-title">About <span>Cafftean</span></h2>
+        </div>
 
-    <!-- FEATURES -->
-    <section id="features">
-      <div class="sec-hd">
-        <div class="sec-tag">Prime Features</div>
-        <h2 class="sec-t">Why Choose <span>Sukoon</span></h2>
-      </div>
-      <div class="feat-grid">
-        <div class="feat-card">
-          <div class="feat-ic">👨‍👩‍👧‍👦</div>
-          <h3>Family Friendly & Private</h3>
-          <p>Spacious layouts designed for families. Complete privacy with separate entrances and secure premises.</p>
+        <div class="about-grid">
+            <div class="about-image-box reveal d1">
+                <img src="https://images.unsplash.com/photo-1442512602411-68927dbe3f98?w=600&h=450&fit=crop" alt="Our Cafe Interior">
+                
+                <div class="about-image-overlay">
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <h3>15+</h3>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="about-stat">
+                            <h3>50K+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div class="about-stat">
+                            <h3>100%</h3>
+                            <p>Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-content reveal d2">
+                <h3 class="font-display text-2xl mb-4" style="color: var(--accent-warm);">
+                    Crafting Perfect Moments Since 2009
+                </h3>
+                <p>
+                    At Cafftean, we believe that great coffee is more than just a beverage — it's an experience. 
+                    Our journey began with a simple mission: to bring the finest coffee traditions to every cup we serve.
+                </p>
+                <p>
+                    From carefully selected beans sourced from the world's best plantations to our artisanal roasting process, 
+                    every step is guided by our commitment to excellence.
+                </p>
+
+                <ul class="feature-list">
+                    <li>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Premium Arabica Beans
+                    </li>
+                    <li>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Artisan Roasting Process
+                    </li>
+                    <li>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        Expert Baristas
+                    </li>
+                    <li>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        Cozy Ambiance
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="feat-card">
-          <div class="feat-ic">✈️</div>
-          <h3>Near Airport & Essentials</h3>
-          <p>Conveniently located near Muscat International Airport, supermarkets, mosques, and restaurants.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-ic">🍳</div>
-          <h3>Fully Equipped Kitchen</h3>
-          <p>Cook your own meals with a complete kitchen — stove, fridge, utensils, and cookware all included.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-ic">📡</div>
-          <h3>High-Speed Internet</h3>
-          <p>Stay connected with fast WiFi perfect for work, streaming, and video calls throughout your stay.</p>
-        </div>
-      </div>
     </section>
 
-    <!-- ROOMS -->
-    <section id="rooms">
-      <div class="sec-hd">
-        <div class="sec-tag">Our Rooms</div>
-        <h2 class="sec-t">Find Your <span>Perfect Stay</span></h2>
-      </div>
-      <div class="room-grid">
-        <div class="room-card">
-          <div class="room-img">
-            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Room">
-            <div class="room-badge">FROM 12 OMR</div>
-          </div>
-          <div class="room-body">
-            <h3>Private Room</h3>
-            <p>Cozy private room with AC, WiFi, and shared bathroom. Ideal for solo travelers and short stays.</p>
-            <div class="room-features">
-              <div class="room-feat"><i class="fas fa-snowflake"></i> AC</div>
-              <div class="room-feat"><i class="fas fa-wifi"></i> WiFi</div>
-              <div class="room-feat"><i class="fas fa-tv"></i> TV</div>
-              <div class="room-feat"><i class="fas fa-bath"></i> Shared Bath</div>
-            </div>
-            <div class="room-bottom">
-              <div class="room-price">12–18 OMR <span>/night</span></div>
-              <button class="room-book" onclick="bookRoom('Private Room')">Book Now</button>
-            </div>
-          </div>
+    <!-- ==================== SERVICES SECTION ==================== -->
+    <section id="services" class="services-section">
+        <div class="section-header reveal">
+            <span class="section-tag">What We Offer</span>
+            <h2 class="section-title">Our <span>Services</span></h2>
         </div>
-        <div class="room-card">
-          <div class="room-img">
-            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80" alt="1BR Apartment">
-            <div class="room-badge" style="background:var(--g-brand)">POPULAR</div>
-          </div>
-          <div class="room-body">
-            <h3>1BR Apartment</h3>
-            <p>Fully furnished one-bedroom apartment with kitchen, living area, and private bathroom. Perfect for couples.</p>
-            <div class="room-features">
-              <div class="room-feat"><i class="fas fa-snowflake"></i> AC</div>
-              <div class="room-feat"><i class="fas fa-wifi"></i> WiFi</div>
-              <div class="room-feat"><i class="fas fa-utensils"></i> Kitchen</div>
-              <div class="room-feat"><i class="fas fa-bath"></i> Private Bath</div>
-              <div class="room-feat"><i class="fas fa-couch"></i> Living Room</div>
+
+        <div class="services-grid">
+            
+            <div class="service-card reveal">
+                <div class="service-card-img">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=450&h=300&fit=crop" alt="Fresh Brewed Coffee">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">☕</div>
+                    <h3>Fresh Brewed Coffee</h3>
+                    <p>Handcrafted beverages made with love using our signature blends and premium ingredients.</p>
+                    <a href="#" class="service-link">
+                        Learn More
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
             </div>
-            <div class="room-bottom">
-              <div class="room-price">26–40 OMR <span>/night</span></div>
-              <button class="room-book" onclick="bookRoom('1BR Apartment')">Book Now</button>
+
+            <div class="service-card reveal d1">
+                <div class="service-card-img">
+                    <img src="https://images.unsplash.com/photo-1517248145-f6f57930f3cf?w=450&h=300&fit=crop" alt="Pastry Collection">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">🥐</div>
+                    <h3>Pastries & Desserts</h3>
+                    <p>Freshly baked goods prepared daily to complement your perfect cup of coffee.</p>
+                    <a href="#" class="service-link">
+                        View Menu
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
             </div>
-          </div>
+
+            <div class="service-card reveal d2">
+                <div class="service-card-img">
+                    <img src="https://images.unsplash.com/photo-1521017432531-fbd92c7eb0af?w=450&h=300&fit=crop" alt="Corporate Events">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">🎉</div>
+                    <h3>Event Catering</h3>
+                    <p>Professional catering services for corporate events, weddings, and special occasions.</p>
+                    <a href="#" class="service-link">
+                        Get Quote
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+
         </div>
-        <div class="room-card">
-          <div class="room-img">
-            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80" alt="2BR Apartment">
-            <div class="room-badge" style="background:var(--g-warm)">FAMILY</div>
-          </div>
-          <div class="room-body">
-            <h3>2BR Apartment</h3>
-            <p>Spacious two-bedroom apartment with full kitchen, separate living room, and two bathrooms. Great for families.</p>
-            <div class="room-features">
-              <div class="room-feat"><i class="fas fa-snowflake"></i> AC</div>
-              <div class="room-feat"><i class="fas fa-wifi"></i> WiFi</div>
-              <div class="room-feat"><i class="fas fa-utensils"></i> Kitchen</div>
-              <div class="room-feat"><i class="fas fa-bath"></i> 2 Baths</div>
-              <div class="room-feat"><i class="fas fa-couch"></i> Living Room</div>
-            </div>
-            <div class="room-bottom">
-              <div class="room-price">32–50 OMR <span>/night</span></div>
-              <button class="room-book" onclick="bookRoom('2BR Apartment')">Book Now</button>
-            </div>
-          </div>
-        </div>
-        <div class="room-card">
-          <div class="room-img">
-            <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80" alt="Heritage Stay">
-            <div class="room-badge" style="background:linear-gradient(135deg,#c084fc,#7c3aed);color:white">HERITAGE</div>
-          </div>
-          <div class="room-body">
-            <h3>Heritage Stay – Misfat Al Abriyeen</h3>
-            <p>Experience authentic Omani heritage in a beautifully restored mud-brick house nestled in the mountains of Ad Dakhiliyah.</p>
-            <div class="room-features">
-              <div class="room-feat"><i class="fas fa-mountain"></i> Mountain View</div>
-              <div class="room-feat"><i class="fas fa-landmark"></i> Heritage</div>
-              <div class="room-feat"><i class="fas fa-wifi"></i> WiFi</div>
-              <div class="room-feat"><i class="fas fa-utensils"></i> Kitchen</div>
-            </div>
-            <div class="room-bottom">
-              <div class="room-price">55–65 OMR <span>/night</span></div>
-              <button class="room-book" onclick="bookRoom('Heritage Stay')">Book Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- LOCATIONS -->
-    <section id="locations">
-      <div class="sec-hd">
-        <div class="sec-tag">Our Locations</div>
-        <h2 class="sec-t">Stay Across <span>Muscat</span></h2>
-      </div>
-      <div class="loc-grid">
-        <div class="loc-card">
-          <div class="loc-icon blue"><i class="fas fa-water"></i></div>
-          <div><h4>Al Mouj Street</h4><p>Premium waterfront living near The Wave</p></div>
-          <div class="loc-tag">POPULAR</div>
+    <!-- ==================== PRODUCTS SECTION ==================== -->
+    <section id="products" class="products-section">
+        <div class="section-header reveal">
+            <span class="section-tag">Our Menu</span>
+            <h2 class="section-title">Popular <span>Products</span></h2>
         </div>
-        <div class="loc-card">
-          <div class="loc-icon purple"><i class="fas fa-umbrella-beach"></i></div>
-          <div><h4>Al Ghubrah Beach</h4><p>Beachside stays with stunning sea views</p></div>
-          <div class="loc-tag">BEACH</div>
-        </div>
-        <div class="loc-card">
-          <div class="loc-icon gold"><i class="fas fa-tree"></i></div>
-          <div><h4>Qurum Park Street</h4><p>Green surroundings, near Qurum Natural Park</p></div>
-          <div class="loc-tag">CENTRAL</div>
-        </div>
-        <div class="loc-card">
-          <div class="loc-icon warm"><i class="fas fa-mountain"></i></div>
-          <div><h4>Misfat Al Abriyeen</h4><p>Heritage village in Ad Dakhiliyah Governorate</p></div>
-          <div class="loc-tag" style="background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.2);color:var(--brand-2)">HERITAGE</div>
-        </div>
-      </div>
-    </section>
 
-    <!-- SERVICES -->
-    <section id="services">
-      <div class="sec-hd">
-        <div class="sec-tag">Exclusive Guest Services</div>
-        <h2 class="sec-t">Beyond <span>Just a Stay</span></h2>
-      </div>
-      <div class="srv-grid">
-        <div class="srv-card">
-          <i class="fas fa-car"></i>
-          <h4>Airport Pickup</h4>
-          <p>Hassle-free airport transfer arranged on request</p>
-        </div>
-        <div class="srv-card">
-          <i class="fas fa-concierge-bell"></i>
-          <h4>Housekeeping</h4>
-          <p>Daily or weekly cleaning service available</p>
-        </div>
-        <div class="srv-card">
-          <i class="fas fa-shopping-bag"></i>
-          <h4>Grocery Delivery</h4>
-          <p>Essentials delivered to your door before arrival</p>
-        </div>
-        <div class="srv-card">
-          <i class="fas fa-route"></i>
-          <h4>Tour Guidance</h4>
-          <p>Local tips and itinerary suggestions for Muscat</p>
-        </div>
-        <div class="srv-card">
-          <i class="fas fa-baby"></i>
-          <h4>Baby Essentials</h4>
-          <p>Crib, high chair available on request for families</p>
-        </div>
-        <div class="srv-card">
-          <i class="fas fa-clock"></i>
-          <h4>Flexible Check-in</h4>
-          <p>Early check-in & late check-out when available</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section id="gallery">
-      <div class="sec-hd">
-        <div class="sec-tag">Gallery</div>
-        <h2 class="sec-t">A Peek <span>Inside</span></h2>
-      </div>
-      <div class="gal-grid">
-        <div class="gal-item"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80" alt="Apartment interior"><div class="gal-label">Living Space</div></div>
-        <div class="gal-item"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&q=80" alt="Kitchen"><div class="gal-label">Kitchen</div></div>
-        <div class="gal-item"><img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&q=80" alt="Bathroom"><div class="gal-label">Bathroom</div></div>
-        <div class="gal-item"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Building exterior"><div class="gal-label">Exterior</div></div>
-        <div class="gal-item"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80" alt="Bedroom"><div class="gal-label">Bedroom</div></div>
-      </div>
-    </section>
-
-    <!-- BOOKING -->
-    <section id="booking">
-      <div class="sec-hd">
-        <div class="sec-tag">Book Your Stay</div>
-        <h2 class="sec-t">Ready to <span>Relax?</span></h2>
-      </div>
-      <div class="book-section">
-        <div class="book-info">
-          <h3>Book via <span style="color:var(--gold)">WhatsApp</span> Only</h3>
-          <p>Fill in your details and we'll send your inquiry directly to our team. We'll respond with available options within minutes!</p>
-          <p class="book-ar">التواصل عن طريق الواتساب فقط<br>سافر، استكن، ارتاح. شقق يومية جاهزة، وحجزك خلال دقائق!</p>
-          <div class="ci">
-            <div class="ci-icon"><i class="fab fa-whatsapp"></i></div>
-            <div class="ci-text"><strong>WhatsApp</strong><span dir="ltr">+968 7727 3791</span></div>
-          </div>
-          <div class="ci">
-            <div class="ci-icon"><i class="fas fa-phone"></i></div>
-            <div class="ci-text"><strong>Call</strong><span dir="ltr">00968 77273791</span></div>
-          </div>
-          <div class="ci">
-            <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="ci-text"><strong>Locations</strong><span>Al Mouj • Al Ghubrah • Qurum • Misfat</span></div>
-          </div>
-          <div class="ci">
-            <div class="ci-icon" style="background:rgba(255,216,137,.08);border-color:rgba(255,216,137,.18);color:var(--gold)"><i class="fas fa-tag"></i></div>
-            <div class="ci-text"><strong>Special Offer</strong><span>Weekly & monthly stays get discounted rates!</span></div>
-          </div>
-        </div>
-        <form class="book-form" id="book-form" onsubmit="handleBook(event)">
-          <div class="f-row">
-            <input type="text" class="f-inp" placeholder="Your Name *" required id="b-name">
-            <input type="tel" class="f-inp" placeholder="Phone / WhatsApp *" required id="b-phone">
-          </div>
-          <div class="f-row">
-            <div style="position:relative">
-              <label style="position:absolute;top:-8px;left:12px;font-size:.65rem;color:var(--brand);background:var(--bg);padding:0 4px;z-index:1">CHECK-IN</label>
-              <input type="date" class="f-inp" required id="b-checkin" style="color-scheme:dark;padding-top:16px">
+        <div class="products-grid">
+            
+            <div class="product-card reveal">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=400&fit=crop" alt="Classic Espresso">
+                    <span class="product-badge">Bestseller</span>
+                </div>
+                <div class="product-info">
+                    <h3>Classic Espresso</h3>
+                    <p>Rich, bold flavor with a perfect crema layer.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹199</span>
+                        <button class="product-btn" onclick="addToCart('Espresso')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div style="position:relative">
-              <label style="position:absolute;top:-8px;left:12px;font-size:.65rem;color:var(--brand);background:var(--bg);padding:0 4px;z-index:1">CHECK-OUT</label>
-              <input type="date" class="f-inp" required id="b-checkout" style="color-scheme:dark;padding-top:16px">
+
+            <div class="product-card reveal d1">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=400&fit=crop" alt="Caramel Latte">
+                    <span class="product-badge" style="background: #8b5cf6;">New</span>
+                </div>
+                <div class="product-info">
+                    <h3>Caramel Latte</h3>
+                    <p>Sweet caramel swirled into creamy steamed milk.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹249</span>
+                        <button class="product-btn" onclick="addToCart('Latte')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="f-row">
-            <select class="f-inp f-sel" required id="b-room">
-              <option value="" disabled selected>Room Type *</option>
-              <option value="Room">Private Room – 12–18 OMR</option>
-              <option value="1BR">1BR Apartment – 26–40 OMR</option>
-              <option value="2BR">2BR Apartment – 32–50 OMR</option>
-              <option value="Heritage">Heritage Stay – 55–65 OMR</option>
-            </select>
-            <select class="f-inp f-sel" required id="b-guests">
-              <option value="" disabled selected>Guests *</option>
-              <option value="1">1 Guest</option>
-              <option value="2">2 Guests</option>
-              <option value="3">3 Guests</option>
-              <option value="4">4 Guests</option>
-              <option value="5">5+ Guests</option>
-            </select>
-          </div>
-          <select class="f-inp f-sel" id="b-loc">
-            <option value="" disabled selected>Preferred Location (Optional)</option>
-            <option value="Al Mouj">Al Mouj Street</option>
-            <option value="Al Ghubrah">Al Ghubrah Beach</option>
-            <option value="Qurum">Qurum Park Street</option>
-            <option value="Misfat">Misfat Al Abriyeen</option>
-            <option value="Any">Any Available</option>
-          </select>
-          <textarea class="f-inp" placeholder="Any special requests..." rows="2" style="resize:none" id="b-notes"></textarea>
-          <button type="submit" class="f-sub" id="book-btn">
-            <i class="fab fa-whatsapp"></i> Send Booking Inquiry
-          </button>
-          <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:4px">You'll be redirected to WhatsApp with your details pre-filled</p>
-        </form>
-      </div>
+
+            <div class="product-card reveal d2">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1578374173705-ccdd14194b71?w=400&h=400&fit=crop" alt="Cold Brew">
+                </div>
+                <div class="product-info">
+                    <h3>Cold Brew</h3>
+                    <p>Smooth, refreshing cold brew steeped for 24 hours.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹279</span>
+                        <button class="product-btn" onclick="addToCart('Cold Brew')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card reveal">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1485808191679-5f8fd2064674?w=400&h=400&fit=crop" alt="Mocha">
+                </div>
+                <div class="product-info">
+                    <h3>Mocha Delight</h3>
+                    <p>Chocolate and espresso combined in perfect harmony.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹269</span>
+                        <button class="product-btn" onclick="addToCart('Mocha')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card reveal d1">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop" alt="Cappuccino">
+                </div>
+                <div class="product-info">
+                    <h3>Cappuccino</h3>
+                    <p>Classic Italian favorite with velvety foam art.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹229</span>
+                        <button class="product-btn" onclick="addToCart('Cappuccino')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card reveal d2">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=400&fit=crop" alt="Affogato">
+                    </div>
+                <div class="product-info">
+                    <h3>Affogato</h3>
+                    <p>Hot espresso poured over cold vanilla gelato.</p>
+                    <div class="product-price-row">
+                        <span class="product-price">₹299</span>
+                        <button class="product-btn" onclick="addToCart('Affogato')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="ft-inner">
-        <div class="ft-brand"><div class="crest" style="width:28px;height:28px;font-size:13px">🏠</div> Sukoon Apartments</div>
-        <div class="ft-links">
-          <a href="#features">Features</a>
-          <a href="#rooms">Rooms</a>
-          <a href="#locations">Locations</a>
-          <a href="#booking">Book</a>
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="contact-section">
+        <div class="section-header reveal">
+            <span class="section-tag">Get In Touch</span>
+            <h2 class="section-title">Contact <span>Us</span></h2>
         </div>
-        <div class="ft-copy">&copy; 2025 Sukoon Apartments Muscat. All rights reserved.</div>
-      </div>
-    </div>
-  </footer>
 
-  <a href="https://wa.me/96877273791?text=Hi%2C%20I%20want%20to%20book%20a%20stay%20at%20Sukoon%20Apartments" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-</div>
+        <div class="contact-grid">
+            
+            <!-- Contact Form -->
+            <div class="contact-form reveal d1">
+                <h3 class="font-display text-2xl mb-6" style="color: var(--accent-warm);">Send us a Message</h3>
+                
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" class="form-input" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" placeholder="john@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Your Message</label>
+                        <textarea class="form-textarea" placeholder="Tell us about your requirements..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full justify-center py-4">
+                        Send Message
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </form>
 
-<!-- INSTALL MODAL -->
-<div id="install-modal">
-  <div class="ins-c">
-    <div class="ins-ic">📲</div>
-    <h3 class="ins-t">Install Sukoon App</h3>
-    <p class="ins-s">Add to home screen for quick booking access!</p>
-    <div id="and-ins">
-      <button class="ins-btn" id="ins-btn">Install Now</button>
-      <p class="ins-lat" onclick="closeIns()">Maybe Later</p>
-    </div>
-    <div id="ios-ins" style="display:none">
-      <div class="ios-g">
-        <div class="ios-g-t">Follow These Steps</div>
-        <div class="ios-st"><span class="ios-n">1</span><span>Tap <strong>Share</strong> button <span style="margin-left:3px">⬆️</span></span></div>
-        <div class="ios-st"><span class="ios-n">2</span><span>Tap <strong>"Add to Home Screen"</strong></span></div>
-        <div class="ios-st"><span class="ios-n">3</span><span>Tap <strong>"Add"</strong></span></div>
-      </div>
-      <p class="ins-lat" onclick="closeIns()" style="margin-top:14px">Close</p>
-    </div>
-  </div>
-</div>
+                <!-- Success Message -->
+                <div id="contactSuccess" class="hidden text-center py-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl text-green-400 mb-2">Message Sent!</h3>
+                    <p class="text-[var(--text-muted)]">We'll get back to you within 24 hours.</p>
+                </div>
+            </div>
 
-<script>
-const $=id=>document.getElementById(id);
+            <!-- Contact Info -->
+            <div class="reveal d2">
+                <div class="contact-info-list">
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h4>Visit Us</h4>
+                            <p>123 Coffee Street, Sector 62,<br>Noida, Uttar Pradesh 201301</p>
+                        </div>
+                    </div>
 
-// SECURITY
-(function(){
-  document.addEventListener('contextmenu',e=>e.preventDefault());
-  window.addEventListener('keydown',e=>{
-    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key))||(e.ctrlKey&&['U','S'].includes(e.key))){e.preventDefault();return false}
-  });
-})();
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h4>Call Us</h4>
+                            <p>+91 98765 43210<br>+91 98765 43211</p>
+                        </div>
+                    </div>
 
-// SPLASH TYPING
-const tType="Travel. Relax. Unwind.";
-let tIdx=0;
-function typeW(){
-  const el=$('typing-text');
-  if(tIdx<tType.length){el.textContent+=tType.charAt(tIdx);tIdx++;setTimeout(typeW,70)}
-  else{setTimeout(enterSite,1600)}
-}
-function enterSite(){
-  $('splash').classList.add('hidden');
-  setTimeout(()=>{
-    $('preloader').style.display='flex';
-    setTimeout(()=>{
-      $('preloader').classList.add('hidden');
-      $('main-content').classList.add('visible');
-      setTimeout(()=>{$('preloader').style.display='none';initSite()},500);
-    },1800);
-  },600);
-}
-document.addEventListener('DOMContentLoaded',()=>setTimeout(typeW,700));
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h4>Email Us</h4>
+                            <p>hello@cafftean.com<br>support@cafftean.com</p>
+                        </div>
+                    </div>
 
-// INIT
-function initSite(){setupNav();setupParallax();setupScroll();setupCounters();setupRespCTA();setTimeout(checkIns,1200)}
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h4>Working Hours</h4>
+                            <p>Mon - Sat: 8:00 AM - 10:00 PM<br>Sunday: 9:00 AM - 8:00 PM</p>
+                        </div>
+                    </div>
 
-// NAV
-function setupNav(){
-  window.addEventListener('scroll',()=>$('navbar').classList.toggle('scrolled',window.scrollY>50));
-  $('menu-tog').addEventListener('click',()=>{$('mob-drawer').classList.add('active');$('dr-ov').classList.add('active')});
-  $('dr-ov').addEventListener('click',closeDr);
-}
-function closeDr(){$('mob-drawer').classList.remove('active');$('dr-ov').classList.remove('active')}
-function setupRespCTA(){
-  const m=window.innerWidth<=960;
-  $('desk-cta').style.display=m?'none':'inline-flex';
-  $('mob-cta').style.display=m?'inline-flex':'none';
-  $('menu-tog').style.display=m?'flex':'none';
-  window.addEventListener('resize',setupRespCTA);
-}
+                </div>
+            </div>
 
-// PARALLAX
-function setupParallax(){
-  const z=$('parallax-zone');if(!z)return;
-  const c=Array.from(z.querySelectorAll('[data-depth]'));
-  z.addEventListener('pointermove',e=>{
-    const r=z.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    c.forEach(card=>{const d=Number(card.dataset.depth);card.style.transform=`translate3d(${x*d}px,${y*d}px,0) rotateY(${x*7}deg) rotateX(${y*-7}deg)`});
-  });
-  z.addEventListener('pointerleave',()=>{c.forEach(card=>{card.style.transform='translate3d(0,0,0) rotateY(0deg) rotateX(0deg)'})});
-}
+        </div>
+    </section>
 
-// SCROLL PROGRESS
-function setupScroll(){
-  window.addEventListener('scroll',()=>{
-    const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
-    $('scroll-prog').style.width=(s/d*100)+'%';
-  });
-}
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            
+            <div class="footer-brand">
+                <span class="logo-text">CAFFTEAN</span>
+                <p>Your premium destination for exceptional coffee experiences. We craft every cup with passion and precision.</p>
+            </div>
 
-// COUNTER
-function setupCounters(){
-  const nums=document.querySelectorAll('[data-count]');
-  const obs=new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){
-        const el=e.target,t=parseInt(el.dataset.count);let c=0;const step=Math.ceil(t/35);
-        const timer=setInterval(()=>{c+=step;if(c>=t){c=t;clearInterval(timer)}el.textContent=c+(el.textContent.includes('+')?'+':'')},45);
-        obs.unobserve(el);
-      }
-    });
-  },{threshold:.5});
-  nums.forEach(n=>obs.observe(n));
-}
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#products">Menu</a></li>
+                </ul>
+            </div>
 
-// BOOKING
-function handleBook(e){
-  e.preventDefault();
-  const name=$('b-name').value.trim();
-  const phone=$('b-phone').value.trim();
-  const cin=$('b-checkin').value;
-  const cout=$('b-checkout').value;
-  const room=$('b-room').value;
-  const guests=$('b-guests').value;
-  const loc=$('b-loc').value;
-  const notes=$('b-notes').value.trim();
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
 
-  if(!name||!phone||!cin||!cout||!room||!guests){showToast('Please fill all required fields');return}
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
 
-  const msg=`🏠 *SUKOON APARTMENTS - BOOKING INQUIRY*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n📅 *Check-in:* ${cin}\n📅 *Check-out:* ${cout}\n🏠 *Room:* ${room}\n👥 *Guests:* ${guests}${loc?'\n📍 *Location:* '+loc:''}${notes?'\n📝 *Notes:* '+notes:''}\n\n_I'd like to book this stay. Please confirm availability._`;
+        </div>
 
-  const btn=$('book-btn');
-  btn.innerHTML='<i class="fas fa-check"></i> Redirecting...';
-  btn.classList.add('success');
-  btn.disabled=true;
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cafftean. All rights reserved.</p>
+            <p>Designed with ❤️ for Coffee Lovers</p>
+        </div>
+    </footer>
 
-  setTimeout(()=>{
-    window.open(`https://wa.me/96877273791?text=${encodeURIComponent(msg)}`,'_blank');
-    btn.innerHTML='<i class="fab fa-whatsapp"></i> Send Booking Inquiry';
-    btn.classList.remove('success');
-    btn.disabled=false;
-    $('book-form').reset();
-  },800);
-}
+    <!-- Sound Toggle Button -->
+    <button class="sound-toggle muted" id="soundToggle" title="Toggle Ambient Sound">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="soundOnIcon">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="soundOffIcon" style="display:none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+    </button>
 
-function bookRoom(type){
-  const roomMap={'Private Room':'Room','1BR Apartment':'1BR','2BR Apartment':'2BR','Heritage Stay':'Heritage'};
-  $('b-room').value=roomMap[type]||'';
-  scrollToBook();
-}
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ========== INITIALIZATION ==========
+        const smokeCanvas = document.getElementById('smoke-canvas');
+        const dustCanvas = document.getElementById('dust-canvas');
+        const splashCanvas = document.getElementById('splash-canvas');
+        
+        const smokeCtx = smokeCanvas.getContext('2d');
+        const dustCtx = dustCanvas.getContext('2d');
+        const splashCtx = splashCanvas ? splashCanvas.getContext('2d') : null;
 
-function scrollToBook(){closeDr();setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),100)}
+        let smokeParticles = [];
+        let dustParticles = [];
+        let splashDrops = [];
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
 
-// TOAST
-function showToast(msg){
-  const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3500);
-}
+        // Audio state
+        let audioContext = null;
+        let gainNode = null;
+        let oscillator = null;
+        let isSoundPlaying = false;
 
-// PWA
-let dp=null;
-const isIOS=/iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-const isSA=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone===true;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
-function checkIns(){
-  if(isSA||sessionStorage.getItem('insDis'))return;
-  $('install-modal').classList.add('active');
-  if(isIOS){$('and-ins').style.display='none';$('ios-ins').style.display='block'}
-  else{$('and-ins').style.display='block';$('ios-ins').style.display='none';
-    $('ins-btn').onclick=async()=>{if(dp){dp.prompt();const{o}=await dp.userChoice;if(o==='accepted')closeIns();dp=null}else{closeIns();showToast('Check browser menu to install')}};
-  }
-}
-function closeIns(){$('install-modal').classList.remove('active');sessionStorage.setItem('insDis','true')}
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// CURSOR
-(function(){
-  const c=$('cursor');if(!c)return;let cx=0,cy=0,tx=0,ty=0;
-  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
-  (function a(){cx+=(tx-cx)*.12;cy+=(ty-cy)*.12;c.style.left=cx+'px';c.style.top=cy+'px';requestAnimationFrame(a)})();
-})();
+        // ========== SMOKE/STEAM PARTICLE SYSTEM ==========
+        function initSmokeCanvas() {
+            smokeCanvas.width = window.innerWidth;
+            smokeCanvas.height = window.innerHeight;
+            createSmokeParticles();
+        }
 
-// SMOOTH SCROLL
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}});
-});
-</script>
+        function createSmokeParticles() {
+            smokeParticles = [];
+            const count = Math.min(60, Math.floor(window.innerWidth / 25));
+
+            for (let i = 0; i < count; i++) {
+                smokeParticles.push({
+                    x: Math.random() * smokeCanvas.width,
+                    y: smokeCanvas.height + Math.random() * 200,
+                    size: Math.max(20, Math.random() * 80 + 30),
+                    speedY: -(Math.random() * 0.6 + 0.2),
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.12 + 0.03,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.01
+                });
+            }
+        }
+
+        function animateSmoke() {
+            smokeCtx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+
+            smokeParticles.forEach((p, index) => {
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += p.rotationSpeed;
+                p.opacity -= 0.0004;
+                p.size += 0.15;
+
+                if (p.y < -200 || p.opacity <= 0) {
+                    smokeParticles[index] = {
+                        x: Math.random() * smokeCanvas.width,
+                        y: smokeCanvas.height + 50,
+                        size: Math.max(20, Math.random() * 70 + 25),
+                        speedY: -(Math.random() * 0.5 + 0.18),
+                        speedX: (Math.random() - 0.5) * 0.25,
+                        opacity: Math.random() * 0.1 + 0.025,
+                        rotation: 0,
+                        rotationSpeed: (Math.random() - 0.5) * 0.008
+                    };
+                    return;
+                }
+
+                smokeCtx.save();
+                smokeCtx.translate(p.x, p.y);
+                smokeCtx.rotate(p.rotation);
+
+                const gradient = smokeCtx.createRadialGradient(0, 0, 0, 0, 0, Math.max(1, p.size));
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${p.opacity})`);
+                gradient.addColorStop(0.4, `rgba(232, 168, 124, ${p.opacity * 0.6})`);
+                gradient.addColorStop(1, `rgba(232, 168, 124, 0)`);
+
+                smokeCtx.fillStyle = gradient;
+                smokeCtx.beginPath();
+                smokeCtx.arc(0, 0, Math.max(1, p.size), 0, Math.PI * 2);
+                smokeCtx.fill();
+                smokeCtx.restore();
+            });
+
+            if (!prefersReducedMotion) requestAnimationFrame(animateSmoke);
+        }
+
+        // ========== DUST SPARKLES ==========
+        function initDustCanvas() {
+            dustCanvas.width = window.innerWidth;
+            dustCanvas.height = window.innerHeight;
+            createDustParticles();
+        }
+
+        function createDustParticles() {
+            dustParticles = [];
+            const count = Math.min(80, Math.floor(window.innerWidth / 18));
+
+            for (let i = 0; i < count; i++) {
+                dustParticles.push({
+                    x: Math.random() * dustCanvas.width,
+                    y: Math.random() * dustCanvas.height,
+                    size: Math.max(0.8, Math.random() * 2.5 + 0.5),
+                    speedX: (Math.random() - 0.5) * 0.15,
+                    speedY: (Math.random() - 0.5) * 0.15,
+                    baseOpacity: Math.random() * 0.5 + 0.15,
+                    twinklePhase: Math.random() * Math.PI * 2,
+                    twinkleSpeed: Math.random() * 0.025 + 0.008
+                });
+            }
+        }
+
+        function animateDust() {
+            dustCtx.clearRect(0, 0, dustCanvas.width, dustCanvas.height);
+
+            dustParticles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.twinklePhase += p.twinkleSpeed;
+
+                if (p.x < 0) p.x = dustCanvas.width;
+                if (p.x > dustCanvas.width) p.x = 0;
+                if (p.y < 0) p.y = dustCanvas.height;
+                if (p.y > dustCanvas.height) p.y = 0;
+
+                const twinkle = (Math.sin(p.twinklePhase) + 1) / 2;
+                const opacity = p.baseOpacity * (0.25 + twinkle * 0.75);
+
+                dustCtx.save();
+                dustCtx.fillStyle = `rgba(252, 217, 182, ${opacity})`;
+                dustCtx.shadowColor = 'rgba(232, 168, 124, 0.7)';
+                dustCtx.shadowBlur = 8;
+                dustCtx.beginPath();
+                dustCtx.arc(p.x, p.y, Math.max(0.4, p.size), 0, Math.PI * 2);
+                dustCtx.fill();
+                dustCtx.restore();
+            });
+
+            if (!prefersReducedMotion) requestAnimationFrame(animateDust);
+        }
+
+        // ========== SPLASH EFFECT ON COFFEE IMAGE ==========
+        function initSplashCanvas() {
+            if (!splashCanvas || !splashCanvas.parentElement) return;
+            
+            const rect = splashCanvas.parentElement.getBoundingClientRect();
+            splashCanvas.width = rect.width;
+            splashCanvas.height = rect.height;
+            createSplashDrops();
+        }
+
+        function createSplashDrops() {
+            splashDrops = [];
+            const centerX = splashCanvas.width * 0.5;
+            const centerY = splashCanvas.height * 0.4;
+
+            for (let i = 0; i < 25; i++) {
+                const angle = (Math.PI * 2 * i) / 25 + (Math.random() - 0.5) * 0.5;
+                const speed = Math.random() * 3 + 1.5;
+                
+                splashDrops.push({
+                    x: centerX + (Math.random() - 0.5) * 60,
+                    y: centerY,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - Math.random() * 2,
+                    size: Math.max(2, Math.random() * 6 + 2),
+                    opacity: 1,
+                    gravity: 0.15
+                });
+            }
+        }
+
+        function animateSplash() {
+            if (!splashCtx || !splashCanvas) return;
+
+            splashCtx.clearRect(0, 0, splashCanvas.width, splashCanvas.height);
+
+            splashDrops.forEach((drop, index) => {
+                drop.x += drop.vx;
+                drop.y += drop.vy;
+                drop.vy += drop.gravity;
+                drop.opacity -= 0.015;
+                drop.size *= 0.99;
+
+                if (drop.opacity <= 0 || drop.y > splashCanvas.height) {
+                    // Reset drop
+                    const centerX = splashCanvas.width * 0.5;
+                    const centerY = splashCanvas.height * 0.4;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 3 + 1.5;
+                    
+                    splashDrops[index] = {
+                        x: centerX + (Math.random() - 0.5) * 60,
+                        y: centerY,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed - Math.random() * 2,
+                        size: Math.max(2, Math.random() * 6 + 2),
+                        opacity: 1,
+                        gravity: 0.15
+                    };
+                    return;
+                }
+
+                splashCtx.save();
+                splashCtx.fillStyle = `rgba(232, 168, 124, ${drop.opacity})`;
+                splashCtx.shadowColor = 'rgba(232, 168, 124, 0.6)';
+                splashCtx.shadowBlur = 6;
+                splashCtx.beginPath();
+                splashCtx.arc(drop.x, drop.y, Math.max(1, drop.size), 0, Math.PI * 2);
+                splashCtx.fill();
+                splashCtx.restore();
+            });
+
+            if (!prefersReducedMotion) requestAnimationFrame(animateSplash);
+        }
+
+        // ========== AMBIENT SOUND ==========
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioContext.createGain();
+                gainNode.gain.value = 0;
+                gainNode.connect(audioContext.destination);
+
+                oscillator = audioContext.createOscillator();
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 65;
+
+                const osc2 = audioContext.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.value = 130;
+
+                const gain2 = audioContext.createGain();
+                gain2.gain.value = 0.25;
+
+                oscillator.connect(gainNode);
+                osc2.connect(gain2);
+                gain2.connect(gainNode);
+
+                oscillator.start();
+                osc2.start();
+            } catch (e) {
+                console.log('Audio not available');
+            }
+        }
+
+        function toggleSound() {
+            const btn = document.getElementById('soundToggle');
+            const iconOn = document.getElementById('soundOnIcon');
+            const iconOff = document.getElementById('soundOffIcon');
+
+            if (!audioContext) initAudio();
+
+            if (isSoundPlaying) {
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
+                isSoundPlaying = false;
+                btn.classList.add('muted');
+                iconOn.style.display = 'none';
+                iconOff.style.display = 'block';
+            } else {
+                if (audioContext.state === 'suspended') audioContext.resume();
+                gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 1);
+                isSoundPlaying = true;
+                btn.classList.remove('muted');
+                iconOn.style.display = 'block';
+                iconOff.style.display = 'none';
+            }
+        }
+
+        // ========== NAVIGATION SCROLL EFFECT ==========
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        }, { passive: true });
+
+        // ========== SCROLL REVEAL ==========
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ========== FORM HANDLING ==========
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('contactSuccess');
+            
+            // Hide form, show success
+            form.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+            
+            // Reset after 5 seconds
+            setTimeout(() => {
+                form.classList.remove('hidden');
+                successMsg.classList.add('hidden');
+                form.reset();
+            }, 5000);
+        }
+
+        // ========== ADD TO CART ==========
+        function addToCart(productName) {
+            // Create toast notification
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 30px;
+                background: linear-gradient(135deg, #d97706, #b45309);
+                color: white;
+                padding: 16px 28px;
+                border-radius: 12px;
+                font-weight: 600;
+                z-index: 9999;
+                box-shadow: 0 10px 40px rgba(217, 119, 6, 0.4);
+                animation: slideIn 0.4s ease;
+                font-size: 0.92rem;
+            `;
+            toast.textContent = `${productName} added to cart!`;
+            document.body.appendChild(toast);
+
+            // Add animation keyframes if not exists
+            if (!document.querySelector('#toastStyles')) {
+                const style = document.createElement('style');
+                style.id = 'toastStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100px); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== MOBILE MENU ==========
+        function toggleMobileMenu() {
+            alert('Mobile menu would open here!');
+        }
+
+        // ========== MOUSE TRACKING ==========
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        }, { passive: true });
+
+        // ========== RESIZE HANDLER ==========
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                initSmokeCanvas();
+                initDustCanvas();
+                initSplashCanvas();
+            }, 250);
+        });
+
+        // ========== SOUND TOGGLE EVENT ==========
+        document.getElementById('soundToggle').addEventListener('click', toggleSound);
+
+        // ========== INITIALIZE EVERYTHING ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initSmokeCanvas();
+            initDustCanvas();
+            initSplashCanvas();
+
+            if (!prefersReducedMotion) {
+                animateSmoke();
+                animateDust();
+                animateSplash();
+            }
+        });
+
+        // ========== SMOOTH SCROLL FOR ANCHOR LINKS ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
